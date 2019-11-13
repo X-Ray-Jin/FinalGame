@@ -36,7 +36,7 @@ public class Hud implements Disposable {
     private static Label plasmaIncrease;
     public Hud(SpriteBatch sb){
         worldTimer = 300;
-        plasmaCount = 0;
+        plasmaCount = 3;
         score = 0;
 
         viewport = new FitViewport(Main.V_WIDTH, Main.V_HEIGHT, new OrthographicCamera());
@@ -81,6 +81,16 @@ public class Hud implements Disposable {
     public static void addPlasma(int pValue){
         plasmaCount +=pValue;
         plasmaIncrease.setText(String.format("%03d",plasmaCount));
+    }
+    public static void minusPlasma(int pValue){
+        plasmaCount -=pValue;
+        plasmaIncrease.setText(String.format("%03d",plasmaCount));
+    }
+    public int getPlasmaCount(){
+        return plasmaCount;
+    }
+    public static void setPlasmaCount(int pCount){
+        plasmaCount = pCount;
     }
 
     @Override
