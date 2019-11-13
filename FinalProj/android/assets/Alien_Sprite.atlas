@@ -1,0 +1,83 @@
+
+Alien_Sprite.png
+size: 2048,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+green__0000_idle
+  rotate: false
+  xy: 1513, 469
+  size: 213, 428
+  orig: 213, 428
+  offset: 0, 0
+  index: 1
+green__0002_idle
+  rotate: false
+  xy: 826, 457
+  size: 235, 440
+  orig: 235, 440
+  offset: 0, 0
+  index: 3
+green__0012_run
+  rotate: false
+  xy: 1728, 463
+  size: 194, 434
+  orig: 194, 434
+  offset: 0, 0
+  index: 1
+green__0013_run
+  rotate: false
+  xy: 267, 23
+  size: 194, 441
+  orig: 194, 441
+  offset: 0, 0
+  index: 2
+green__0015_run
+  rotate: false
+  xy: 463, 33
+  size: 177, 436
+  orig: 177, 436
+  offset: 0, 0
+  index: 4
+green__0020_hurt
+  rotate: false
+  xy: 1290, 466
+  size: 221, 431
+  orig: 221, 431
+  offset: 0, 0
+  index: 3
+green__0021_hurt
+  rotate: false
+  xy: 1063, 465
+  size: 225, 432
+  orig: 225, 432
+  offset: 0, 0
+  index: 4
+green__0027_jump
+  rotate: false
+  xy: 312, 471
+  size: 266, 426
+  orig: 266, 426
+  offset: 0, 0
+  index: 1
+green__0029_jump
+  rotate: false
+  xy: 2, 2
+  size: 263, 462
+  orig: 263, 462
+  offset: 0, 0
+  index: 3
+green__0036_fire
+  rotate: false
+  xy: 580, 474
+  size: 244, 423
+  orig: 244, 423
+  offset: 0, 0
+  index: 2
+green__0040_fire
+  rotate: false
+  xy: 2, 466
+  size: 308, 431
+  orig: 308, 431
+  offset: 0, 0
+  index: 6

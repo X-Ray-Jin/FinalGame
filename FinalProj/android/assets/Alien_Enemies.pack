@@ -1,0 +1,27 @@
+
+Alien_Enemies.png
+size: 1024,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Small_Alien
+  rotate: false
+  xy: 2, 2
+  size: 374, 34
+  orig: 374, 34
+  offset: 0, 0
+  index: -1
+Small_Boss
+  rotate: false
+  xy: 378, 2
+  size: 272, 34
+  orig: 272, 34
+  offset: 0, 0
+  index: -1
+Small_Enemy
+  rotate: false
+  xy: 652, 2
+  size: 204, 34
+  orig: 204, 34
+  offset: 0, 0
+  index: -1
