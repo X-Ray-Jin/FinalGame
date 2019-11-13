@@ -1,4 +1,5 @@
 package com.mygdx.game.Sprites;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -8,33 +9,31 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Main;
 import com.mygdx.game.Screens.PlayScreen;
 
-import static com.mygdx.game.Main.BULLET_BIT;
-
-public class Soldier extends Enemies {
-    private float stateTime;
-    private Animation<TextureRegion> walkAnimation;
+public class Plasma_Bullet extends Bullet {
+    private float stTime;
+    private Animation<TextureRegion> shootAnimation;
     private Array<TextureRegion> frames;
 
-    public Soldier(PlayScreen screen, float x, float y) {
+    public Plasma_Bullet(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
-        for(int i=3;i<6; i++ )
-            frames.add(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"), i *34,4,32,32));
-        walkAnimation = new Animation(0.3f,frames);
-        stateTime = 0;
-        setBounds(getX(),getY(),32/Main.PPM,32/Main.PPM);
+        for(int i=0;i<2; i++ )
+            frames.add(new TextureRegion(screen.getBulletAtlas().findRegion("Plasma_Ammo"), i *18,2,16,16));
+        shootAnimation = new Animation(0.3f,frames);
+        stTime = 0;
+        setBounds(getX(),getY(),16/ Main.PPM,16/Main.PPM);
     }
     public void update(float dt){
-        stateTime += dt;
+        stTime += dt;
         setPosition(b2body.getPosition().x-getWidth()/2, b2body.getPosition().y-getHeight()/2);
-        setRegion(walkAnimation.getKeyFrame(stateTime,true));
+        setRegion(shootAnimation.getKeyFrame(stTime,true));
 
     }
 
     @Override
-    protected void defineEnemies() {
+    protected void defineBullet() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(getX(), getY());
+        bdef.position.set(getX()+.5f, getY()+.5f);
         bdef.type = BodyDef.BodyType.DynamicBody;
 
 
@@ -46,20 +45,20 @@ public class Soldier extends Enemies {
 
 
         //size of the collision body
-        shape.setRadius(12.8f / Main.PPM);
+        shape.setRadius(4.5f / Main.PPM);
 
-        fdef.filter.categoryBits = Main.ENEMY_BIT;
-        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.ALIEN_BIT|Main.OBJECT_BIT|BULLET_BIT;
+        fdef.filter.categoryBits = Main.BULLET_BIT;
+        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.OBJECT_BIT;
 
         //setting shape above head
         fdef.shape = shape;
 
-        fdef.filter.categoryBits = Main.SOLDIER_DEATH_BIT;
+        fdef.filter.categoryBits = Main.BULLET_BIT;
 
         b2body.createFixture(fdef);
 
 
-        b2body.createFixture(fdef).setUserData("soldier");
+        b2body.createFixture(fdef).setUserData("Bullet");
 
 
 
@@ -70,3 +69,5 @@ public class Soldier extends Enemies {
 
     }
 }
+
+

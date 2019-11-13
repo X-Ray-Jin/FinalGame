@@ -28,6 +28,7 @@ import com.mygdx.game.Main;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Sprites.Alien;
 import com.mygdx.game.Sprites.Enemies;
+import com.mygdx.game.Sprites.Plasma_Bullet;
 import com.mygdx.game.Sprites.Soldier;
 import com.mygdx.game.Tools.E51WorldCreator;
 import com.mygdx.game.Tools.WorldContactListener;
@@ -37,6 +38,7 @@ public class PlayScreen implements Screen {
     private Main game;
 
     private TextureAtlas atlas;
+    private TextureAtlas bullAtlas;
 
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -56,11 +58,13 @@ public class PlayScreen implements Screen {
     //sprite(s)
     private Alien player;
     private Soldier soldier;
+    private Plasma_Bullet pBullet;
 
 
 
     public PlayScreen(Main game){
         atlas = new TextureAtlas("Alien_And_Enemies.atlas");
+        bullAtlas = new TextureAtlas("Plasma_Ammo.atlas");
 
         this.game=game;
 
@@ -85,6 +89,8 @@ public class PlayScreen implements Screen {
 
         soldier = new Soldier(this,.32f,.32f);
 
+        pBullet = new Plasma_Bullet(this, .16f, .16f);
+
         world.setContactListener(new WorldContactListener());
 
 
@@ -93,6 +99,9 @@ public class PlayScreen implements Screen {
 
     public TextureAtlas getAtlat(){
         return atlas;
+    }
+    public TextureAtlas getBulletAtlas(){
+        return bullAtlas;
     }
 
     @Override
@@ -116,7 +125,11 @@ public class PlayScreen implements Screen {
 
         player.update(dt);
 
+        pBullet.update(dt);
+
         soldier.update(dt);
+
+
 
         gamecam.position.x = player.b2body.getPosition().x;
         gamecam.position.y = player.b2body.getPosition().y;
@@ -134,14 +147,16 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
         //recognize camera in game world:only render what gamecam see's
-       // game.batch.setProjectionMatrix(gamecam.combined);
+        //game.batch.setProjectionMatrix(gamecam.combined);
         b2dr.render(world, gamecam.combined);
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         player.draw(game.batch);
 
-        //soldier.draw(game.batch);
+        soldier.draw(game.batch);
+
+        pBullet.draw(game.batch);
         game.batch.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
