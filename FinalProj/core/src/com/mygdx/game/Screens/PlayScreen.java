@@ -28,7 +28,8 @@ import com.mygdx.game.Main;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Sprites.Alien;
 import com.mygdx.game.Sprites.Enemies;
-import com.mygdx.game.Sprites.Plasma_Bullet;
+import com.mygdx.game.Sprites.PlasmaBullet;
+
 import com.mygdx.game.Sprites.Soldier;
 import com.mygdx.game.Tools.E51WorldCreator;
 import com.mygdx.game.Tools.WorldContactListener;
@@ -58,7 +59,7 @@ public class PlayScreen implements Screen {
     //sprite(s)
     private Alien player;
     private Soldier soldier;
-    private Plasma_Bullet pBullet;
+    private PlasmaBullet pBullet;
 
 
 
@@ -89,7 +90,7 @@ public class PlayScreen implements Screen {
 
         soldier = new Soldier(this,.32f,.32f);
 
-        pBullet = new Plasma_Bullet(this, .16f, .16f);
+        pBullet = new PlasmaBullet(this, .16f, .16f);
 
         world.setContactListener(new WorldContactListener());
 

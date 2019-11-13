@@ -9,12 +9,12 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Main;
 import com.mygdx.game.Screens.PlayScreen;
 
-public class Plasma_Bullet extends Bullet {
+public class PlasmaBullet extends Bullet {
     private float stTime;
     private Animation<TextureRegion> shootAnimation;
     private Array<TextureRegion> frames;
 
-    public Plasma_Bullet(PlayScreen screen, float x, float y) {
+    public PlasmaBullet(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         for(int i=0;i<2; i++ )
