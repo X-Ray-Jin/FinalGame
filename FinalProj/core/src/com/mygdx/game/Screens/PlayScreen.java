@@ -103,11 +103,8 @@ public class PlayScreen implements Screen {
 
 
         public void shootTrigger() {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                //pBullet = new PlasmaBullet(this, .16f, .16f);
+                pBullet = new PlasmaBullet(this, .16f, .16f);
                 pBullet.b2body.applyLinearImpulse(new Vector2(5.5f, 3), pBullet.b2body.getWorldCenter(), true);
-
-            }
 
         }
 
