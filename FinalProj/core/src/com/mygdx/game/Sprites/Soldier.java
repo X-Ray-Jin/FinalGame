@@ -55,6 +55,7 @@ public class Soldier extends Enemies {
         fdef.shape = shape;
 
         fdef.filter.categoryBits = Main.SOLDIER_DEATH_BIT;
+        fdef.filter.categoryBits = Main.ENEMY_BIT;
 
         b2body.createFixture(fdef);
 

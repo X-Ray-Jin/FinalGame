@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Main;
 import com.mygdx.game.Screens.PlayScreen;
 
+import static com.mygdx.game.Main.SOLDIER_DEATH_BIT;
+
 public class PlasmaBullet extends Bullet {
     private float stTime;
     private Animation<TextureRegion> shootAnimation;
@@ -17,9 +19,9 @@ public class PlasmaBullet extends Bullet {
     public PlasmaBullet(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
-        for(int i=0;i<2; i++ )
+        for(int i=0;i<3; i++ )
             frames.add(new TextureRegion(screen.getBulletAtlas().findRegion("Plasma_Ammo"), i *18,2,16,16));
-        shootAnimation = new Animation(0.3f,frames);
+        shootAnimation = new Animation(0.1f,frames);
         stTime = 0;
         setBounds(getX(),getY(),16/ Main.PPM,16/Main.PPM);
     }
@@ -33,7 +35,7 @@ public class PlasmaBullet extends Bullet {
     @Override
     protected void defineBullet() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(getX()+.5f, getY()+.5f);
+        bdef.position.set(getX()+.6f, getY()+.6f);
         bdef.type = BodyDef.BodyType.DynamicBody;
 
 
@@ -48,7 +50,7 @@ public class PlasmaBullet extends Bullet {
         shape.setRadius(4.5f / Main.PPM);
 
         fdef.filter.categoryBits = Main.BULLET_BIT;
-        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.OBJECT_BIT;
+        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.OBJECT_BIT|SOLDIER_DEATH_BIT;
 
         //setting shape above head
         fdef.shape = shape;

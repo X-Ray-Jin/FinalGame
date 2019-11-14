@@ -109,6 +109,7 @@ public class Alien extends Sprite {
             return State.STANDING;
     }
 
+
     public void defineAlien() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(32 / Main.PPM, 32 / Main.PPM);
@@ -126,7 +127,7 @@ public class Alien extends Sprite {
         shape.setRadius(13.4f / Main.PPM);
 
         fdef.filter.categoryBits = Main.ALIEN_BIT;
-        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.OBJECT_BIT|Main.SOLDIER_DEATH_BIT;
+        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.OBJECT_BIT;
 
         //setting shape above head
         fdef.shape = shape;

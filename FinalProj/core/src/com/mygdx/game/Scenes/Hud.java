@@ -36,7 +36,7 @@ public class Hud implements Disposable {
     private static Label plasmaIncrease;
     public Hud(SpriteBatch sb){
         worldTimer = 300;
-        plasmaCount = 3;
+        plasmaCount = 1000;
         score = 0;
 
         viewport = new FitViewport(Main.V_WIDTH, Main.V_HEIGHT, new OrthographicCamera());

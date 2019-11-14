@@ -10,7 +10,7 @@ public class Main extends Game {
     //game screen size
 	public static final int V_WIDTH = 500;
 	public static final int V_HEIGHT = 240;
-	//scaling alien pixels per meter
+	//scaling pixels per meter
 	public static final float PPM = 100;
 	public SpriteBatch batch;
 

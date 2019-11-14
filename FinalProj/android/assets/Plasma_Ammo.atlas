@@ -1,13 +1,13 @@
 
 Plasma_Ammo.png
-size: 64,32
+size: 128,32
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Plasma_Ammo
   rotate: false
   xy: 2, 2
-  size: 36, 18
-  orig: 36, 18
+  size: 72, 18
+  orig: 72, 18
   offset: 0, 0
   index: -1

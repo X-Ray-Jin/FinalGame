@@ -69,6 +69,8 @@ public class PlayScreen implements Screen {
 
         this.game=game;
 
+
+
         gamecam= new OrthographicCamera();
         //game screen set size: FitviewPort maintains aspect ratio
         gamePort = new FitViewport(Main.V_WIDTH / Main.PPM, Main.V_HEIGHT/Main.PPM, gamecam);
@@ -99,6 +101,16 @@ public class PlayScreen implements Screen {
 
     }
 
+
+        public void shootTrigger() {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                pBullet = new PlasmaBullet(this, .16f, .16f);
+
+            }
+
+        }
+
+
     public TextureAtlas getAtlat(){
         return atlas;
     }
@@ -114,7 +126,8 @@ public class PlayScreen implements Screen {
     public void handleInput(float dt){
         if(hud.getPlasmaCount()>0) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                pBullet.b2body.applyLinearImpulse(new Vector2(4f, 0), pBullet.b2body.getWorldCenter(), true);
+                pBullet.b2body.applyLinearImpulse(new Vector2(5.5f, 3), pBullet.b2body.getWorldCenter(), true);
+                shootTrigger();
                 Hud.minusPlasma(1);
             }
         }
