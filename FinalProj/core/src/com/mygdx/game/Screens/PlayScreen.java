@@ -125,12 +125,16 @@ public class PlayScreen implements Screen {
 
     }
     public void handleInput(float dt){
+
         if(hud.getPlasmaCount()>0) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                pBullet = new PlasmaBullet(this, .16f, .16f);
+                pBullet.setPosition(player.getX(), player.getY());
+                //pBullet.setPosition(player.getX(), player.getY());
+               // pBullet = new PlasmaBullet(this, .16f, .16f);
+
                // pBullet.b2body.applyLinearImpulse(new Vector2(5.5f, 3), pBullet.b2body.getWorldCenter(), true);
                 shootTrigger();
-                pBullet.setPosition(player.getX(), player.getY());
+               // pBullet.setPosition(player.getX(), player.getY());
                 Hud.minusPlasma(1);
             }
         }
