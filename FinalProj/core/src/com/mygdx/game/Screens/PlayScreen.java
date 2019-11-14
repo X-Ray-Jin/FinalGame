@@ -128,6 +128,7 @@ public class PlayScreen implements Screen {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 pBullet.b2body.applyLinearImpulse(new Vector2(5.5f, 3), pBullet.b2body.getWorldCenter(), true);
                 shootTrigger();
+                pBullet.setPosition(player.getX(), player.getY());
                 Hud.minusPlasma(1);
             }
         }

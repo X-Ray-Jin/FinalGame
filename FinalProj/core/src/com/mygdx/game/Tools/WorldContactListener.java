@@ -32,6 +32,7 @@ public class WorldContactListener implements ContactListener {
                 ((Enemies)fixA.getUserData()).hitByBullet();
             else if(fixB.getFilterData().categoryBits == Main.SOLDIER_DEATH_BIT)
                 ((Enemies)fixB.getUserData()).hitByBullet();
+
     }
 
     }

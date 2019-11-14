@@ -9,11 +9,16 @@ import com.mygdx.game.Main;
 import com.mygdx.game.Screens.PlayScreen;
 
 import static com.mygdx.game.Main.BULLET_BIT;
+import static com.mygdx.game.Main.SOLDIER_DEATH_BIT;
 
 public class Soldier extends Enemies {
+    public enum State {SRUNNING,SDEAD, SIDLE}
     private float stateTime;
     private Animation<TextureRegion> walkAnimation;
+    private Animation<TextureRegion> deadAnimation;
+    private Animation<TextureRegion> idleAnimation;
     private Array<TextureRegion> frames;
+    public State currentState;
 
     public Soldier(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -21,6 +26,13 @@ public class Soldier extends Enemies {
         for(int i=3;i<6; i++ )
             frames.add(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"), i *34,4,32,32));
         walkAnimation = new Animation(0.3f,frames);
+        for(int i=0;i<2; i++ )
+            frames.add(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"), i *34,4,32,32));
+        deadAnimation = new Animation(0.2f,frames);
+        for(int i=2;i<3; i++ )
+            frames.add(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"), i *34,4,32,32));
+        idleAnimation = new Animation(0.2f,frames);
+
         stateTime = 0;
         setBounds(getX(),getY(),32/Main.PPM,32/Main.PPM);
     }
@@ -29,7 +41,35 @@ public class Soldier extends Enemies {
         setPosition(b2body.getPosition().x-getWidth()/2, b2body.getPosition().y-getHeight()/2);
         setRegion(walkAnimation.getKeyFrame(stateTime,true));
 
+
     }
+    /*
+    public TextureRegion getFrame(float dt) {
+        currentState = getState();
+
+        TextureRegion region;
+        switch (currentState) {
+            case SIDLE:
+                 idleAnimation;
+                break;
+            case SRUNNING:
+                region = ;
+                break;
+            case SDEAD:
+                deadAnimation
+                break;
+
+            default:
+                region = IDLE;
+                break;
+        }
+        return region;
+    }
+    public State getState(){
+
+    }
+
+     */
 
     @Override
     protected void defineEnemies() {
@@ -54,7 +94,7 @@ public class Soldier extends Enemies {
         //setting shape above head
         fdef.shape = shape;
 
-        fdef.filter.categoryBits = Main.SOLDIER_DEATH_BIT;
+        fdef.filter.categoryBits = SOLDIER_DEATH_BIT;
         fdef.filter.categoryBits = Main.ENEMY_BIT;
 
         b2body.createFixture(fdef);
@@ -68,6 +108,7 @@ public class Soldier extends Enemies {
 
     @Override
     public void hitByBullet() {
+
 
     }
 }

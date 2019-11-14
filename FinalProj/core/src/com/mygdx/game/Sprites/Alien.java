@@ -1,6 +1,8 @@
 package com.mygdx.game.Sprites;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -19,7 +21,7 @@ public class Alien extends Sprite {
 
     public World world;
 
-    public enum State {FALLING, JUMPING, STANDING, RUNNING}
+    public enum State {FALLING, JUMPING, STANDING, RUNNING, SHOOTING}
     public State currentState;
     public State previousState;
     public Body b2body;
@@ -27,6 +29,7 @@ public class Alien extends Sprite {
 
     private Animation <TextureRegion> alienRun;
     private Animation <TextureRegion> alienJump;
+    private Animation <TextureRegion> alienShoot;
     private float stateTimer;
     private boolean runningRight;
 
@@ -55,6 +58,10 @@ public class Alien extends Sprite {
         alienJump = new Animation(0.11f, frames);
        // frames.clear();
 
+        for (int i =9; i < 11; i++)
+            frames.add(new TextureRegion(getTexture(), i * 34, 4, 32, 32));
+        alienShoot = new Animation(0.11f, frames);
+
         //total width is 374px (1,34,68,102,136,170,204,...etc)
         alienIdle = new TextureRegion(getTexture(), 68, 4, 32, 32);
         //set bounds of sprite
@@ -78,6 +85,11 @@ public class Alien extends Sprite {
             case RUNNING:
                 region = alienRun.getKeyFrame(stateTimer, true);
                 break;
+            case SHOOTING:
+                if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+                    region = alienShoot.getKeyFrame(stateTimer,true);
+            }
+
             case FALLING:
             case STANDING:
             default:

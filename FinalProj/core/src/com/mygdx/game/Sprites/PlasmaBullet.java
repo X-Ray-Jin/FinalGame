@@ -69,6 +69,8 @@ public class PlasmaBullet extends Bullet {
     @Override
     public void hitByBullet() {
 
+
+
     }
 }
 
