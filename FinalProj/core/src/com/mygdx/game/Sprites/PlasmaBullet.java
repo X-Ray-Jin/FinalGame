@@ -35,7 +35,7 @@ public class PlasmaBullet extends Bullet {
     @Override
     protected void defineBullet() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(getX()+.6f, getY()+.6f);
+        bdef.position.set(getX(), getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
 
 
