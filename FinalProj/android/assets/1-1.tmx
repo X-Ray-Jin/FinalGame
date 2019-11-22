@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="185" height="35" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="155">
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="185" height="35" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="164">
  <tileset firstgid="1" name="Background1" tilewidth="32" tileheight="32" tilecount="100" columns="10">
   <image source="New Project copy 2.png" width="320" height="320"/>
  </tileset>
@@ -24,6 +24,9 @@
  <tileset firstgid="110" name="Plasma" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="Plasma.png" width="32" height="32"/>
  </tileset>
+ <tileset firstgid="111" name="Tube" tilewidth="32" tileheight="32" tilecount="2" columns="1">
+  <image source="Tube.png" width="32" height="64"/>
+ </tileset>
  <layer id="5" name="Background1" width="185" height="35">
   <data encoding="base64" compression="zlib">
    eJzt2VOOBUAABdE3tm3btm3b2P8apjYxSXe6bnL+agc3k3HOOeecc8455/5nWchGDnKRh3wUoBBFKLazi7grQSnKUI4KVKIK1ahBrZ1dxF0d6tGARjShGS1oRRva7ewi7jrQiS50owe96EM/BjBoZxdxN4RhjGAUYxjHBCYxhWk7u4i7GcxiDvNYwCKWsIwVrNrZRdytYR0b2MQWtrGDXexh384u4u4AhzjCMU5wijOc4wKXdnYRd1e4xg1ucYd7POART3i2s4u4e8Er3vCOD3ziC9/4wa+dXcRdSH+UnZ0/p52dP6ednT+nXWpdSH+UnZ0/p52dP6ednT+nXWpdSH+UnZ0/p52dP6ednT+nXWpdSH+UnZ0/p52dP6ednT+nXWpdSH+UnZ0/p52dP6ednT+nXWrdHzZ5RZk=
@@ -42,6 +45,11 @@
  <layer id="13" name="Plasmas" width="185" height="35">
   <data encoding="base64" compression="zlib">
    eJzt2tENwCAIBUAndv/PzlBqUnjeTQBBRI1rAQAAAJ3tvwMAAACgzJ0um/rCDHo1l9oyScf12jEmAHgjYZYl5JBAHeBu9gCoO9U/+hAAAACALrxVAcBZZisAwHzOdPBNag9V85rw7zC1ZtDZAzI3CQc=
+  </data>
+ </layer>
+ <layer id="14" name="Tube" width="185" height="35">
+  <data encoding="base64" compression="zlib">
+   eJzt2cEJACAMA0A31v1fbiAFKaXlboK8AiFrAQAAAAAAAAAA8LKrA0CyUx0AAAAgWWTb2/90Ftn29v98eozp9NgfHcF0OgIAAAAAAADifMhM50MG6OECfiIFOw==
   </data>
  </layer>
  <layer id="7" name="Graphics/Misc" width="185" height="35">
@@ -158,5 +166,10 @@
  </objectgroup>
  <objectgroup id="11" name="Wall">
   <object id="129" x="1446" y="479.333" width="20.6667" height="608.667"/>
+  <object id="155" x="2529" y="578" width="2" height="61"/>
+  <object id="159" x="2843" y="385" width="3" height="255"/>
+  <object id="160" x="3037" y="385" width="4" height="287"/>
+  <object id="161" x="5598" y="19" width="3" height="463"/>
+  <object id="163" x="3326" y="672" width="3" height="98"/>
  </objectgroup>
 </map>

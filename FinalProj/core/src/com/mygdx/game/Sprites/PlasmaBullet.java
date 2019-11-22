@@ -35,7 +35,7 @@ public class PlasmaBullet extends Bullet {
     @Override
     protected void defineBullet() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(getX(), getY());
+        bdef.position.set(getX(), getY()+.085f);
         bdef.type = BodyDef.BodyType.DynamicBody;
 
 
@@ -50,7 +50,7 @@ public class PlasmaBullet extends Bullet {
         shape.setRadius(4.5f / Main.PPM);
 
         fdef.filter.categoryBits = Main.BULLET_BIT;
-        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.OBJECT_BIT|SOLDIER_DEATH_BIT;
+        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.OBJECT_BIT;
 
         //setting shape above head
         fdef.shape = shape;
@@ -66,12 +66,12 @@ public class PlasmaBullet extends Bullet {
 
     }
 
-    @Override
+   /* @Override
     public void hitByBullet() {
 
 
 
-    }
+    }*/
 }
 
 

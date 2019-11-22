@@ -27,10 +27,10 @@ public class WorldContactListener implements ContactListener {
         }
     }
     switch(collisionDef){
-        case Main.SOLDIER_DEATH_BIT | Main.BULLET_BIT:
-            if(fixA.getFilterData().categoryBits == Main.SOLDIER_DEATH_BIT)
+        case Main.ENEMY_BIT| Main.BULLET_BIT:
+            if(fixA.getFilterData().categoryBits == Main.BULLET_BIT)
                 ((Enemies)fixA.getUserData()).hitByBullet();
-            else if(fixB.getFilterData().categoryBits == Main.SOLDIER_DEATH_BIT)
+            else if(fixB.getFilterData().categoryBits == Main.BULLET_BIT)
                 ((Enemies)fixB.getUserData()).hitByBullet();
 
     }

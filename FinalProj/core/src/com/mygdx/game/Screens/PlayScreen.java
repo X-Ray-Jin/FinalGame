@@ -93,7 +93,7 @@ public class PlayScreen implements Screen {
 
         soldier = new Soldier(this,.32f,.32f);
 
-        pBullet = new PlasmaBullet(this, .16f, .16f);
+        pBullet = new PlasmaBullet(this, player.getX(), player.getY());
 
         world.setContactListener(new WorldContactListener());
 
@@ -125,10 +125,7 @@ public class PlayScreen implements Screen {
 
         if(hud.getPlasmaCount()>0) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-              //  pBullet.setPosition(player.getX(), player.getY());
-
                 shootTrigger();
-
                 Hud.minusPlasma(1);
             }
         }

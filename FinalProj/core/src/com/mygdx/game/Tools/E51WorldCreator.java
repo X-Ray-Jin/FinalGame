@@ -24,7 +24,7 @@ public class E51WorldCreator {
         Body body;
 
         //ground fixtures
-        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
+        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -37,7 +37,7 @@ public class E51WorldCreator {
             body.createFixture(fdef);
         }
         //boxes/crates fixtures
-        for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
+        for(MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -55,14 +55,14 @@ public class E51WorldCreator {
 
         }
         //Plasma fixtures
-        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+        for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
 
             new Plasma(screen, rect);
         }
         //Wall fixtures
-        for(MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
+        for(MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
