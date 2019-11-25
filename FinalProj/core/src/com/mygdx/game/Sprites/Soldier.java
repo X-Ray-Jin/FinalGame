@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Main;
+import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
 
 import static com.mygdx.game.Main.BULLET_BIT;
@@ -110,6 +111,8 @@ public class Soldier extends Enemies {
     @Override
     public void hitByBullet() {
         setToDeath = true;
+        //on death add 20 points
+        Hud.addScore(20);
 
     }
 }

@@ -21,6 +21,7 @@ public abstract class Enemies extends Sprite {
 
     protected abstract void defineEnemies();
     public abstract void hitByBullet();
+
     public abstract void update(float dt);
 
     public void reverseVelocity(boolean x, boolean y){

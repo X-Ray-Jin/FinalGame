@@ -60,7 +60,7 @@ public class Alien extends Sprite {
 
         for (int i =9; i < 11; i++)
             frames.add(new TextureRegion(getTexture(), i * 34, 4, 32, 32));
-        alienShoot = new Animation(0.11f, frames);
+        alienShoot = new Animation(0.06f, frames);
 
         //total width is 374px (1,34,68,102,136,170,204,...etc)
         alienIdle = new TextureRegion(getTexture(), 68, 4, 32, 32);
@@ -86,10 +86,8 @@ public class Alien extends Sprite {
                 region = alienRun.getKeyFrame(stateTimer, true);
                 break;
             case SHOOTING:
-                if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-                    region = alienShoot.getKeyFrame(stateTimer,true);
-            }
-
+                region = alienShoot.getKeyFrame(stateTimer);
+                break;
             case FALLING:
             case STANDING:
             default:
@@ -111,6 +109,8 @@ public class Alien extends Sprite {
     }
 
     public State getState(){
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+            return State.SHOOTING;
         if(b2body.getLinearVelocity().y>0 || (b2body.getLinearVelocity().y <0 && previousState == State.JUMPING))
             return State.JUMPING;
         if(b2body.getLinearVelocity().y<0)
