@@ -1,5 +1,6 @@
 package com.mygdx.game.Sprites;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -30,7 +31,7 @@ public class Soldier extends Enemies {
         walkAnimation = new Animation(0.3f,frames);
         for(int i=0;i<2; i++ )
             frames.add(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"), i *34,4,32,32));
-        deadAnimation = new Animation(0.2f,frames);
+        deadAnimation = new Animation(0.3f,frames);
         for(int i=2;i<3; i++ )
             frames.add(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"), i *34,4,32,32));
         idleAnimation = new Animation(0.2f,frames);
@@ -46,10 +47,13 @@ public class Soldier extends Enemies {
         if(setToDeath && !death){
             world.destroyBody(b2body);
             death = true;
-            setRegion(deadAnimation.getKeyFrame(stateTime,true));
+            setRegion(deadAnimation.getKeyFrame(stateTime));
+            stateTime = 0;
+           // setRegion(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"),34,0,32,32));
 
         }
         else if(!death) {
+            b2body.setLinearVelocity(velocity);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
         }
@@ -85,13 +89,22 @@ public class Soldier extends Enemies {
        // fdef.filter.categoryBits = Main.SOLDIER_DEATH_BIT;
         fdef.filter.categoryBits = Main.ENEMY_BIT;
 
-        b2body.createFixture(fdef);
+        b2body.createFixture(fdef).setUserData(this);
 
+       /* CircleShape body = new CircleShape();
+        fdef.shape=body;
+        body.setRadius(12.8f/Main.PPM);
+        fdef.filter.categoryBits = SOLDIER_DEATH_BIT;
+        b2body.createFixture(fdef).setUserData(this);
 
-        //b2body.createFixture(fdef).setUserData("soldier");
+*/
 
-
-
+    }
+//Makes soldier dissapear when dead after .5 seconds
+    public void draw(Batch batch){
+        if(!death || stateTime <.5f){
+            super.draw(batch);
+        }
     }
 
     @Override

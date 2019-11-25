@@ -32,7 +32,7 @@ public abstract class Bullet extends Sprite
     }
 
     protected abstract void defineBullet();
-   // public abstract void hitByBullet();
+    public abstract void hitByBullet();
 
 
 

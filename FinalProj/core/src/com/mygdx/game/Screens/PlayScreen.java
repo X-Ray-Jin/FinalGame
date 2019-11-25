@@ -45,7 +45,7 @@ public class PlayScreen implements Screen {
     private Viewport gamePort;
     private Hud hud;
 
-
+    private E51WorldCreator creator;
 
 
     private TmxMapLoader maploader;
@@ -87,11 +87,11 @@ public class PlayScreen implements Screen {
         //gravity
         world = new World(new Vector2(0,-10), true);
         b2dr = new Box2DDebugRenderer();
-        new E51WorldCreator(this);
+        creator = new E51WorldCreator(this);
         //creating player-Alien
         player=new Alien(this);
 
-        soldier = new Soldier(this,.32f,.32f);
+        //soldier = new Soldier(this,.32f,.32f);
 
         pBullet = new PlasmaBullet(this, player.getX(), player.getY());
 
@@ -150,8 +150,9 @@ public class PlayScreen implements Screen {
 
         pBullet.update(dt);
 
-        soldier.update(dt);
-
+       // soldier.update(dt);
+        for(Enemies enemies : creator.getSoldiers())
+            enemies.update(dt);
 
 
         gamecam.position.x = player.b2body.getPosition().x;
@@ -177,7 +178,9 @@ public class PlayScreen implements Screen {
         game.batch.begin();
         player.draw(game.batch);
 
-        soldier.draw(game.batch);
+       // soldier.draw(game.batch);
+        for(Enemies enemies : creator.getSoldiers())
+            enemies.draw(game.batch);
 
         pBullet.draw(game.batch);
         game.batch.end();

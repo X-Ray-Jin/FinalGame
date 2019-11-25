@@ -60,18 +60,19 @@ public class PlasmaBullet extends Bullet {
         b2body.createFixture(fdef);
 
 
-        b2body.createFixture(fdef).setUserData("Bullet");
+        b2body.createFixture(fdef).setUserData(this);
 
 
 
     }
 
-   /* @Override
+
+    @Override
     public void hitByBullet() {
 
 
 
-    }*/
+    }
 }
 
 

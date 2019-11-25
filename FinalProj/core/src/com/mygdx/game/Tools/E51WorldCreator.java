@@ -9,11 +9,18 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Main;
 import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Plasma;
+import com.mygdx.game.Sprites.Soldier;
 
 public class E51WorldCreator {
+    public Array<Soldier> getSoldiers() {
+        return soldiers;
+    }
+
+    private Array<Soldier> soldiers;
     public E51WorldCreator(PlayScreen screen){
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
@@ -77,6 +84,14 @@ public class E51WorldCreator {
 
             body.createFixture(fdef);
 
+        }
+        //creating all soldiers
+        soldiers = new Array<Soldier>();
+        for(MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+
+            soldiers.add(new Soldier(screen, rect.getX() / Main.PPM, rect.getY() / Main.PPM));
         }
     }
 }
