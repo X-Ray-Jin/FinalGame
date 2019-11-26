@@ -23,6 +23,7 @@ public class Soldier extends Enemies {
     private boolean setToDeath;
     private boolean death;
     public State currentState;
+    private int count = 0;
 
     public Soldier(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -45,14 +46,15 @@ public class Soldier extends Enemies {
     }
     public void update(float dt){
         stateTime += dt;
-        if(setToDeath && !death){
-            world.destroyBody(b2body);
-            death = true;
-            setRegion(deadAnimation.getKeyFrame(stateTime));
-            stateTime = 0;
-           // setRegion(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"),34,0,32,32));
+            if (setToDeath && !death && count==3) {
+                world.destroyBody(b2body);
+                death = true;
+                setRegion(deadAnimation.getKeyFrame(stateTime));
+                stateTime = 0;
+                // setRegion(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"),34,0,32,32));
 
-        }
+            }
+
         else if(!death) {
             b2body.setLinearVelocity(velocity);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
@@ -111,6 +113,7 @@ public class Soldier extends Enemies {
     @Override
     public void hitByBullet() {
         setToDeath = true;
+        count++;
         //on death add 20 points
         Hud.addScore(20);
 

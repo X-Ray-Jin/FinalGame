@@ -63,6 +63,7 @@ public class PlayScreen implements Screen {
 
 
 
+
     public PlayScreen(Main game){
         atlas = new TextureAtlas("Alien_And_Enemies.atlas");
         bullAtlas = new TextureAtlas("Plasma_Ammo.atlas");
@@ -93,18 +94,27 @@ public class PlayScreen implements Screen {
 
         //soldier = new Soldier(this,.32f,.32f);
 
+
         pBullet = new PlasmaBullet(this, player.getX(), player.getY());
 
         world.setContactListener(new WorldContactListener());
 
 
 
+
+
     }
+
 
 
         public void shootTrigger() {
                 pBullet = new PlasmaBullet(this, player.getX(), player.getY());
-                pBullet.b2body.applyLinearImpulse(new Vector2(5.5f, 2f), pBullet.b2body.getWorldCenter(), true);
+                if(player.isRunningRight()==true) {
+                    pBullet.b2body.applyLinearImpulse(new Vector2(5.5f, 2), pBullet.b2body.getWorldCenter(), true);
+                }
+                else{
+                    pBullet.b2body.applyLinearImpulse(new Vector2(-5.5f, 2), pBullet.b2body.getWorldCenter(), true);
+                }
 
         }
 
@@ -151,8 +161,12 @@ public class PlayScreen implements Screen {
         pBullet.update(dt);
 
        // soldier.update(dt);
-        for(Enemies enemies : creator.getSoldiers())
+        for(Enemies enemies : creator.getSoldiers()) {
             enemies.update(dt);
+            //delay start soldier movement + activate it
+            if(enemies.getX()<player.getX()+2.8f)
+                enemies.b2body.setActive(true);
+        }
 
 
         gamecam.position.x = player.b2body.getPosition().x;
@@ -182,7 +196,10 @@ public class PlayScreen implements Screen {
         for(Enemies enemies : creator.getSoldiers())
             enemies.draw(game.batch);
 
+
         pBullet.draw(game.batch);
+
+
         game.batch.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);

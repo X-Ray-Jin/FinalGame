@@ -73,6 +73,9 @@ public class Alien extends Sprite {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
     }
+    public boolean isRunningRight(){
+        return runningRight;
+    }
 
     public TextureRegion getFrame(float dt) {
         currentState = getState();
@@ -101,12 +104,16 @@ public class Alien extends Sprite {
             region.flip(true, false);
             runningRight = true;
         }
+
         stateTimer = currentState == previousState ? stateTimer + dt : 0;
         previousState=currentState;
 
         return region;
 
     }
+
+
+
 
     public State getState(){
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
