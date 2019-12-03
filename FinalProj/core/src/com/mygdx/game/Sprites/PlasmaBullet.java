@@ -11,7 +11,7 @@ import com.mygdx.game.Screens.PlayScreen;
 
 import static com.mygdx.game.Main.SOLDIER_DEATH_BIT;
 
-public class PlasmaBullet extends Bullet {
+public class PlasmaBullet extends Bullet  {
     private float stTime;
     private Animation<TextureRegion> shootAnimation;
     private Array<TextureRegion> frames;
@@ -67,7 +67,7 @@ public class PlasmaBullet extends Bullet {
 
         fdef.filter.categoryBits = Main.BULLET_BIT;
 
-        b2body.createFixture(fdef);
+        //b2body.createFixture(fdef);
 
 
         b2body.createFixture(fdef).setUserData(this);
@@ -77,7 +77,7 @@ public class PlasmaBullet extends Bullet {
     }
 
 
-    @Override
+   @Override
     public void hitByBullet() {
 
 

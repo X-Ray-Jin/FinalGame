@@ -21,15 +21,14 @@ public class WorldContactListener implements ContactListener {
 
     int collisionDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
-    if(fixA.getUserData()=="alien" || fixB.getUserData()=="alien"){
-        Fixture head = fixA.getUserData() == "alien" ? fixA:fixB;
-        Fixture object = head == fixA ? fixB : fixA;
 
-        if(object.getUserData() !=null && InteractiveObject.class.isAssignableFrom(object.getUserData().getClass())){
-            ((InteractiveObject)object.getUserData()).onBodyHit();
-        }
-    }
     switch(collisionDef){
+        case Main.ALIEN_BIT | Main.PLASMA_BIT:
+            if(fixA.getFilterData().categoryBits == Main.PLASMA_BIT)
+                ((InteractiveObject)fixA.getUserData()).onBodyHit();
+            else
+                ((InteractiveObject)fixB.getUserData()).onBodyHit();
+            break;
         case Main.ENEMY_BIT| Main.BULLET_BIT:
             if(fixA.getFilterData().categoryBits == Main.ENEMY_BIT)
                 ((Enemies)fixA.getUserData()).hitByBullet();
@@ -51,6 +50,12 @@ public class WorldContactListener implements ContactListener {
         case Main.ENEMY_BIT | Main.ENEMY_BIT:
             ((Enemies)fixA.getUserData()).reverseVelocity(true,false);
             ((Enemies)fixB.getUserData()).reverseVelocity(true,false);
+            break;
+        case Main.ENEMY_BIT | Main.PLASMA_BIT:
+            if(fixA.getFilterData().categoryBits == Main.ENEMY_BIT)
+                ((Enemies)fixA.getUserData()).reverseVelocity(true,false);
+            else
+                ((Enemies)fixB.getUserData()).reverseVelocity(true,false);
             break;
 
 

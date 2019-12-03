@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -64,6 +65,7 @@ public class PlayScreen implements Screen {
 
 
 
+
     public PlayScreen(Main game){
         atlas = new TextureAtlas("Alien_And_Enemies.atlas");
         bullAtlas = new TextureAtlas("Plasma_Ammo.atlas");
@@ -94,7 +96,6 @@ public class PlayScreen implements Screen {
 
         //soldier = new Soldier(this,.32f,.32f);
 
-
         pBullet = new PlasmaBullet(this, player.getX(), player.getY());
 
         world.setContactListener(new WorldContactListener());
@@ -109,11 +110,13 @@ public class PlayScreen implements Screen {
 
         public void shootTrigger() {
                 pBullet = new PlasmaBullet(this, player.getX(), player.getY());
+
                 if(player.isRunningRight()==true) {
                     pBullet.b2body.applyLinearImpulse(new Vector2(5.5f, 2), pBullet.b2body.getWorldCenter(), true);
                 }
                 else{
                     pBullet.b2body.applyLinearImpulse(new Vector2(-5.5f, 2), pBullet.b2body.getWorldCenter(), true);
+
                 }
 
         }
@@ -140,8 +143,10 @@ public class PlayScreen implements Screen {
                     Hud.minusPlasma(1);
                 }
             }
+
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
                 player.b2body.applyLinearImpulse(new Vector2(0, 3f), player.b2body.getWorldCenter(), true);
+
             if (Gdx.input.isKeyJustPressed(Input.Keys.W))
                 player.b2body.applyLinearImpulse(new Vector2(0, 3f), player.b2body.getWorldCenter(), true);
             if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT)
@@ -206,6 +211,7 @@ public class PlayScreen implements Screen {
         else{
             pBullet.draw(game.batch);
             pBullet.flip(true,false);
+
 
         }
 

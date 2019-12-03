@@ -46,7 +46,7 @@ public class Soldier extends Enemies {
     }
     public void update(float dt){
         stateTime += dt;
-            if (setToDeath && !death && count<=3) {
+            if (setToDeath && !death && count>=4) {
                 world.destroyBody(b2body);
                 death = true;
                 setRegion(deadAnimation.getKeyFrame(stateTime));
@@ -116,7 +116,11 @@ public class Soldier extends Enemies {
     @Override
     public void hitByBullet() {
         count++;
-        setToDeath = true;
+        if(count>4) {
+            setToDeath = true;
+
+        }
+
 
         //on death add 20 points
       //  Hud.addScore(20);

@@ -44,6 +44,7 @@ public abstract class InteractiveObject {
     }
 
     public abstract void onBodyHit();
+
     public void setCategoryFilter(short filterBit){
         Filter filter = new Filter();
         filter.categoryBits = filterBit;

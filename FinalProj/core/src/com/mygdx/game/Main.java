@@ -22,6 +22,8 @@ public class Main extends Game {
 	public static final short OBJECT_BIT = 32;
 	public static final short BULLET_BIT = 64;
 	public static final short SOLDIER_DEATH_BIT=128;
+	public static final short DISSAPEAR_BIT=256;
+
 	
 	@Override
 	public void create () {

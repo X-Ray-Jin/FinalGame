@@ -174,6 +174,7 @@ public class Alien extends Sprite {
 
         b2body.createFixture(fdef).setUserData(this);
 
+
     }
 
 }
