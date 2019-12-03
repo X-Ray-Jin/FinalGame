@@ -46,13 +46,16 @@ public class Soldier extends Enemies {
     }
     public void update(float dt){
         stateTime += dt;
-            if (setToDeath && !death && count==3) {
+            if (setToDeath && !death && count<=3) {
                 world.destroyBody(b2body);
                 death = true;
                 setRegion(deadAnimation.getKeyFrame(stateTime));
                 stateTime = 0;
                 // setRegion(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"),34,0,32,32));
-
+                //count =0;
+                //adds score and plasma
+                Hud.addScore(20);
+                Hud.addPlasma(1);
             }
 
         else if(!death) {
@@ -112,10 +115,11 @@ public class Soldier extends Enemies {
 
     @Override
     public void hitByBullet() {
-        setToDeath = true;
         count++;
+        setToDeath = true;
+
         //on death add 20 points
-        Hud.addScore(20);
+      //  Hud.addScore(20);
 
     }
 }

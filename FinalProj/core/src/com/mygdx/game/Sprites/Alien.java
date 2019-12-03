@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -21,15 +22,17 @@ public class Alien extends Sprite {
 
     public World world;
 
-    public enum State {FALLING, JUMPING, STANDING, RUNNING, SHOOTING}
+    public enum State {FALLING, JUMPING, STANDING, RUNNING, SHOOTING, DEAD}
     public State currentState;
     public State previousState;
     public Body b2body;
     private TextureRegion alienIdle;
+    private boolean alienIsDead;
 
     private Animation <TextureRegion> alienRun;
     private Animation <TextureRegion> alienJump;
     private Animation <TextureRegion> alienShoot;
+    private Animation <TextureRegion> alienDead;
     private float stateTimer;
     private boolean runningRight;
 
@@ -61,12 +64,16 @@ public class Alien extends Sprite {
         for (int i =9; i < 11; i++)
             frames.add(new TextureRegion(getTexture(), i * 34, 4, 32, 32));
         alienShoot = new Animation(0.06f, frames);
+        for (int i =0; i < 2; i++)
+            frames.add(new TextureRegion(getTexture(), i * 34, 4, 32, 32));
+        alienDead = new Animation(0.06f, frames);
 
         //total width is 374px (1,34,68,102,136,170,204,...etc)
         alienIdle = new TextureRegion(getTexture(), 68, 4, 32, 32);
         //set bounds of sprite
         setBounds(0, 0, 32 / Main.PPM, 32 / Main.PPM);
         setRegion(alienIdle);
+        alienIsDead=false;
     }
 
     public void update(float dt) {
@@ -82,6 +89,9 @@ public class Alien extends Sprite {
 
         TextureRegion region;
         switch (currentState) {
+            case DEAD:
+                region=alienDead.getKeyFrame(stateTimer);
+                break;
             case JUMPING:
                 region = alienJump.getKeyFrame(stateTimer);
                 break;
@@ -116,6 +126,9 @@ public class Alien extends Sprite {
 
 
     public State getState(){
+        if(alienIsDead){
+            return State.DEAD;
+        }
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
             return State.SHOOTING;
         if(b2body.getLinearVelocity().y>0 || (b2body.getLinearVelocity().y <0 && previousState == State.JUMPING))
@@ -126,6 +139,12 @@ public class Alien extends Sprite {
             return State.RUNNING;
         else
             return State.STANDING;
+
+        }
+
+    public void hit(){
+            alienIsDead=true;
+
     }
 
 
@@ -153,7 +172,7 @@ public class Alien extends Sprite {
 
 
 
-        b2body.createFixture(fdef).setUserData("alien");
+        b2body.createFixture(fdef).setUserData(this);
 
     }
 

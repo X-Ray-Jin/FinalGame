@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.Main;
+import com.mygdx.game.Sprites.Alien;
 import com.mygdx.game.Sprites.Bullet;
 import com.mygdx.game.Sprites.Enemies;
 import com.mygdx.game.Sprites.InteractiveObject;
@@ -42,10 +43,10 @@ public class WorldContactListener implements ContactListener {
                 ((Enemies)fixB.getUserData()).reverseVelocity(true,false);
             break;
         case Main.ALIEN_BIT | Main.ENEMY_BIT:
-            if(fixA.getFilterData().categoryBits == Main.ENEMY_BIT)
-                ((Enemies)fixA.getUserData()).reverseVelocity(true,false);
+            if(fixA.getFilterData().categoryBits == Main.ALIEN_BIT)
+                ((Alien)fixA.getUserData()).hit();
             else
-                ((Enemies)fixB.getUserData()).reverseVelocity(true,false);
+                ((Alien)fixB.getUserData()).hit();
             break;
         case Main.ENEMY_BIT | Main.ENEMY_BIT:
             ((Enemies)fixA.getUserData()).reverseVelocity(true,false);

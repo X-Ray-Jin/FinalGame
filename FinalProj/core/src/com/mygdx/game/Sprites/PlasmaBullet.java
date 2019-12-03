@@ -15,7 +15,7 @@ public class PlasmaBullet extends Bullet {
     private float stTime;
     private Animation<TextureRegion> shootAnimation;
     private Array<TextureRegion> frames;
-   // private Alien player;
+    public Alien player;
 
     public PlasmaBullet(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -31,13 +31,13 @@ public class PlasmaBullet extends Bullet {
     public void update(float dt){
         stTime += dt;
         setPosition(b2body.getPosition().x-getWidth()/2, b2body.getPosition().y-getHeight()/2);
-      //  if(player.isRunningRight()==true) {
+        //if(player.isRunningRight()) {
             setRegion(shootAnimation.getKeyFrame(stTime, true));
-       // }
+      //  }
        // else{
        //     setRegion(shootAnimation.getKeyFrame(stTime, true));
        //     flip(true,false);
-      //  }
+       // }
 
 
     }
