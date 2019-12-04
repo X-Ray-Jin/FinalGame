@@ -35,7 +35,7 @@ public class Alien extends Sprite {
     private Animation <TextureRegion> alienDead;
     private float stateTimer;
     private boolean runningRight;
-
+    public int jumpCount;
 
     public Alien(PlayScreen screen) {
         //Take in the alien sprite sheet
@@ -133,6 +133,7 @@ public class Alien extends Sprite {
             return State.SHOOTING;
         if(b2body.getLinearVelocity().y>0 || (b2body.getLinearVelocity().y <0 && previousState == State.JUMPING))
             return State.JUMPING;
+            jumpCount++;
         if(b2body.getLinearVelocity().y<0)
             return State.FALLING;
         else if(b2body.getLinearVelocity().x !=0)
@@ -147,6 +148,7 @@ public class Alien extends Sprite {
 
     }
     public void hitGround(){
+        jumpCount=0;
 
     }
 

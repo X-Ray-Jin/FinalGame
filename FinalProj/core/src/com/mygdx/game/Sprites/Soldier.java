@@ -59,6 +59,7 @@ public class Soldier extends Enemies {
                 //adds score and plasma
                 Hud.addScore(20);
                 Hud.addPlasma(1);
+                
             }
 
         else if(!death) {

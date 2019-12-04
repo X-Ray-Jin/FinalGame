@@ -145,12 +145,14 @@ public class PlayScreen implements Screen {
                     Hud.minusPlasma(1);
                 }
             }
+          if(player.jumpCount !=3) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+                    player.b2body.applyLinearImpulse(new Vector2(0, 3f), player.b2body.getWorldCenter(), true);
 
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
-                player.b2body.applyLinearImpulse(new Vector2(0, 3f), player.b2body.getWorldCenter(), true);
-
-            if (Gdx.input.isKeyJustPressed(Input.Keys.W))
-                player.b2body.applyLinearImpulse(new Vector2(0, 3f), player.b2body.getWorldCenter(), true);
+                if (Gdx.input.isKeyJustPressed(Input.Keys.W))
+                    player.b2body.applyLinearImpulse(new Vector2(0, 3f), player.b2body.getWorldCenter(), true);
+                player.jumpCount++;
+            }
             if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT)
                     || Gdx.input.isKeyPressed(Input.Keys.D)) && player.b2body.getLinearVelocity().x <= 2)
                 player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
