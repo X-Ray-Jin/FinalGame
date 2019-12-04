@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Main;
 import com.mygdx.game.Screens.PlayScreen;
+import com.mygdx.game.Sprites.BossLevel1;
 import com.mygdx.game.Sprites.Plasma;
 import com.mygdx.game.Sprites.Soldier;
 
@@ -19,7 +20,10 @@ public class E51WorldCreator {
     public Array<Soldier> getSoldiers() {
         return soldiers;
     }
-
+    public Array<BossLevel1> getBoss1() {
+        return boss1;
+    }
+    private Array<BossLevel1> boss1;
     private Array<Soldier> soldiers;
     public E51WorldCreator(PlayScreen screen){
         World world = screen.getWorld();
@@ -92,6 +96,13 @@ public class E51WorldCreator {
 
 
             soldiers.add(new Soldier(screen, rect.getX() / Main.PPM, rect.getY() / Main.PPM));
+        }
+       boss1 = new Array<BossLevel1>();
+        for(MapObject object : map.getLayers().get(11).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+
+            boss1.add(new BossLevel1(screen, rect.getX() / Main.PPM, rect.getY() / Main.PPM));
         }
     }
 }

@@ -28,6 +28,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Main;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Sprites.Alien;
+import com.mygdx.game.Sprites.BossLevel1;
 import com.mygdx.game.Sprites.Enemies;
 import com.mygdx.game.Sprites.PlasmaBullet;
 
@@ -61,6 +62,7 @@ public class PlayScreen implements Screen {
     private Alien player;
     private Soldier soldier;
     private PlasmaBullet pBullet;
+    private BossLevel1 boss1;
 
 
 
@@ -174,6 +176,12 @@ public class PlayScreen implements Screen {
             if(enemies.getX()<player.getX()+2.8f)
                 enemies.b2body.setActive(true);
         }
+        for(Enemies enemies : creator.getBoss1()) {
+            enemies.update(dt);
+            //delay start soldier movement + activate it
+            if(enemies.getX()<player.getX()+2.8f)
+                enemies.b2body.setActive(true);
+        }
 
 
         gamecam.position.x = player.b2body.getPosition().x;
@@ -201,6 +209,8 @@ public class PlayScreen implements Screen {
 
        // soldier.draw(game.batch);
         for(Enemies enemies : creator.getSoldiers())
+            enemies.draw(game.batch);
+        for(Enemies enemies : creator.getBoss1())
             enemies.draw(game.batch);
 
         if(player.isRunningRight()) {
