@@ -12,6 +12,7 @@ import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
 
 import static com.mygdx.game.Main.BULLET_BIT;
+import static com.mygdx.game.Main.ENEMY_BIT;
 
 public class BossLevel1 extends Enemies {
     private Animation<TextureRegion> walkAnimation;
@@ -53,58 +54,6 @@ public class BossLevel1 extends Enemies {
 
 
     }
-
-    @Override
-    protected void defineEnemies() {
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(getX(), getY());
-        bdef.type = BodyDef.BodyType.DynamicBody;
-
-
-        b2body = world.createBody(bdef);
-
-
-        FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-
-
-        //size of the collision body
-        shape.setRadius(12.8f / Main.PPM);
-        //fdef.filter.categoryBits = Main.SOLDIER_DEATH_BIT;
-
-
-        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.ALIEN_BIT|Main.OBJECT_BIT|BULLET_BIT;
-
-        //setting shape above head
-        fdef.shape = shape;
-
-        // fdef.filter.categoryBits = Main.SOLDIER_DEATH_BIT;
-        fdef.filter.categoryBits = Main.BOSS1_BIT;
-
-        b2body.createFixture(fdef).setUserData(this);
-    }
-    public void draw(Batch batch){
-        if(!death || stateTime <.5f){
-            super.draw(batch);
-        }
-    }
-
-    @Override
-    public void hitByBullet() {
-        count++;
-        if(count>7) {
-            setToDeath = true;
-
-        }
-
-
-        //on death add 20 points
-        //  Hud.addScore(20);
-
-    }
-
-
-
     @Override
     public void update(float dt) {
         stateTime += dt;
@@ -136,5 +85,55 @@ public class BossLevel1 extends Enemies {
         }
 
     }
+
+    @Override
+    protected void defineEnemies() {
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(getX(), getY());
+        bdef.type = BodyDef.BodyType.DynamicBody;
+
+
+        b2body = world.createBody(bdef);
+
+
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+
+
+        //size of the collision body
+        shape.setRadius(12.8f / Main.PPM);
+
+
+
+        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.ALIEN_BIT|Main.OBJECT_BIT|BULLET_BIT|ENEMY_BIT;
+
+        //setting shape above head
+        fdef.shape = shape;
+
+
+        fdef.filter.categoryBits = Main.BOSS1_BIT;
+
+        b2body.createFixture(fdef).setUserData(this);
+    }
+    public void draw(Batch batch){
+        if(!death || stateTime <.5f){
+            super.draw(batch);
+        }
+    }
+
+    @Override
+    public void hitByBullet() {
+        count++;
+        if(count>7) {
+            setToDeath = true;
+
+        }
+
+
+        //on death add 20 points
+        //  Hud.addScore(20);
+
+    }
+
 
 }

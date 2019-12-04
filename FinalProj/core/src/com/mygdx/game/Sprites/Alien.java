@@ -146,6 +146,9 @@ public class Alien extends Sprite {
             alienIsDead=true;
 
     }
+    public void hitGround(){
+
+    }
 
 
     public void defineAlien() {

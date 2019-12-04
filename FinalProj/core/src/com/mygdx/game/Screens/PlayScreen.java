@@ -179,7 +179,7 @@ public class PlayScreen implements Screen {
         for(Enemies enemies : creator.getBoss1()) {
             enemies.update(dt);
             //delay start soldier movement + activate it
-            if(enemies.getX()<player.getX()+2.8f)
+            if(enemies.getX()<player.getX()+1.6f)
                 enemies.b2body.setActive(true);
         }
 
