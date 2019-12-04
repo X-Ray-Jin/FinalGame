@@ -95,7 +95,7 @@ public class Soldier extends Enemies {
         //size of the collision body
         shape.setRadius(12.8f / Main.PPM);
         //fdef.filter.categoryBits = Main.SOLDIER_DEATH_BIT;
-        fdef.filter.categoryBits = Main.ENEMY_BIT;
+
 
         fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.ALIEN_BIT|Main.OBJECT_BIT|BULLET_BIT;
 

@@ -57,6 +57,19 @@ public class WorldContactListener implements ContactListener {
             else
                 ((Enemies)fixB.getUserData()).reverseVelocity(true,false);
             break;
+        case Main.BOSS1_BIT | Main.BULLET_BIT:
+            if(fixA.getFilterData().categoryBits == Main.BOSS1_BIT)
+                ((Enemies)fixA.getUserData()).hitByBullet();
+            else
+                ((Enemies)fixB.getUserData()).hitByBullet();
+            break;
+        case Main.BOSS1_BIT | Main.OBJECT_BIT:
+            if(fixA.getFilterData().categoryBits == Main.BOSS1_BIT)
+                ((Enemies)fixA.getUserData()).reverseVelocity(true,false);
+            else
+                ((Enemies)fixB.getUserData()).reverseVelocity(true,false);
+            break;
+
 
 
 
