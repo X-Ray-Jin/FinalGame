@@ -35,7 +35,7 @@ public class Alien extends Sprite {
     private Animation <TextureRegion> alienDead;
     private float stateTimer;
     private boolean runningRight;
-    public int jumpCount;
+    public int jumpCount=0;
 
     public Alien(PlayScreen screen) {
         //Take in the alien sprite sheet
@@ -145,6 +145,7 @@ public class Alien extends Sprite {
 
     public void hit(){
             alienIsDead=true;
+            System.out.println("HIT");
 
     }
     public void hitGround(){
