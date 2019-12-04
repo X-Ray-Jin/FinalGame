@@ -24,6 +24,7 @@ public class Soldier extends Enemies {
     private boolean death;
     public State currentState;
     private int count = 0;
+    private boolean runningRight;
 
     public Soldier(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -46,6 +47,8 @@ public class Soldier extends Enemies {
     }
     public void update(float dt){
         stateTime += dt;
+        TextureRegion region;
+        region=walkAnimation.getKeyFrame(stateTime,true);
             if (setToDeath && !death && count>=4) {
                 world.destroyBody(b2body);
                 death = true;
@@ -62,6 +65,13 @@ public class Soldier extends Enemies {
             b2body.setLinearVelocity(velocity);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
+        }
+        if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
+            region.flip(true, false);
+            runningRight = false;
+        } else if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
+            region.flip(true, false);
+            runningRight = true;
         }
 
 
