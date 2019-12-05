@@ -131,9 +131,10 @@ public class Alien extends Sprite {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
             return State.SHOOTING;
-        if(b2body.getLinearVelocity().y>0 || (b2body.getLinearVelocity().y <0 && previousState == State.JUMPING))
+
+        if (b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
             return State.JUMPING;
-            jumpCount++;
+
         if(b2body.getLinearVelocity().y<0)
             return State.FALLING;
         else if(b2body.getLinearVelocity().x !=0)
@@ -146,6 +147,11 @@ public class Alien extends Sprite {
     public void hit(){
             alienIsDead=true;
             System.out.println("HIT");
+
+    }
+    public void hit1(){
+        alienIsDead=true;
+        System.out.println("HIT");
 
     }
     public void hitGround(){
@@ -171,7 +177,7 @@ public class Alien extends Sprite {
         shape.setRadius(13.4f / Main.PPM);
 
         fdef.filter.categoryBits = Main.ALIEN_BIT;
-        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.OBJECT_BIT;
+        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.OBJECT_BIT|Main.BOSS1_BIT;
 
         //setting shape above head
         fdef.shape = shape;
