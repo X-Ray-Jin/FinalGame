@@ -16,6 +16,7 @@ public class PlasmaBullet extends Bullet  {
     private Animation<TextureRegion> shootAnimation;
     private Array<TextureRegion> frames;
     public Alien player;
+    public boolean bulletDead;
 
     public PlasmaBullet(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -25,7 +26,7 @@ public class PlasmaBullet extends Bullet  {
         shootAnimation = new Animation(0.1f,frames);
         stTime = 0;
         setBounds(getX(),getY(),16/ Main.PPM,16/Main.PPM);
-
+        bulletDead=false;
        // player.isRunningRight();
     }
     public void update(float dt){
@@ -44,37 +45,40 @@ public class PlasmaBullet extends Bullet  {
 
     @Override
     protected void defineBullet() {
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(getX(), getY()+.085f);
-        bdef.type = BodyDef.BodyType.DynamicBody;
+
+            BodyDef bdef = new BodyDef();
+            bdef.position.set(getX(), getY() + .085f);
+            bdef.type = BodyDef.BodyType.DynamicBody;
 
 
-        b2body = world.createBody(bdef);
+            b2body = world.createBody(bdef);
 
 
-        FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
+            FixtureDef fdef = new FixtureDef();
+            CircleShape shape = new CircleShape();
 
 
-        //size of the collision body
-        shape.setRadius(4.5f / Main.PPM);
+            //size of the collision body
+            shape.setRadius(4.5f / Main.PPM);
 
-        fdef.filter.categoryBits = Main.BULLET_BIT;
-        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.OBJECT_BIT;
+            fdef.filter.categoryBits = Main.BULLET_BIT;
+            fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT | Main.ENEMY_BIT | Main.OBJECT_BIT | Main.BOSS1_BIT;
 
-        //setting shape above head
-        fdef.shape = shape;
+            //setting shape above head
+            fdef.shape = shape;
 
-        fdef.filter.categoryBits = Main.BULLET_BIT;
+            fdef.filter.categoryBits = Main.BULLET_BIT;
 
-        //b2body.createFixture(fdef);
+            //b2body.createFixture(fdef);
 
 
-        b2body.createFixture(fdef).setUserData(this);
+            b2body.createFixture(fdef).setUserData(this);
 
 
 
     }
+
+
 
 
    @Override

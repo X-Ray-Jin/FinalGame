@@ -105,12 +105,12 @@ public class PlayScreen implements Screen {
 
 
 
-
     }
 
 
 
         public void shootTrigger() {
+                pBullet.bulletDead=false;
                 pBullet = new PlasmaBullet(this, player.getX(), player.getY());
 
                 if(player.isRunningRight()==true) {
@@ -145,14 +145,20 @@ public class PlayScreen implements Screen {
                     Hud.minusPlasma(1);
                 }
             }
-         /// if(player.jumpCount >3) {
+          //if(player.jumpCount < 3) {
+
                 if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
                     player.b2body.applyLinearImpulse(new Vector2(0, 3f), player.b2body.getWorldCenter(), true);
 
                 if (Gdx.input.isKeyJustPressed(Input.Keys.W))
                     player.b2body.applyLinearImpulse(new Vector2(0, 3f), player.b2body.getWorldCenter(), true);
-             ///   player.jumpCount++;
-          ///  }
+
+               // System.out.println(player.jumpCount);
+
+                player.alienLanded=false;
+                player.jumpCount++;
+
+           // }
             if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT)
                     || Gdx.input.isKeyPressed(Input.Keys.D)) && player.b2body.getLinearVelocity().x <= 2)
                 player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
@@ -219,6 +225,7 @@ public class PlayScreen implements Screen {
 
 
             pBullet.draw(game.batch);
+
         }
         else{
             pBullet.draw(game.batch);
@@ -272,6 +279,7 @@ public class PlayScreen implements Screen {
         b2dr.dispose();
         hud.dispose();
         map.dispose();
+
 
 
     }

@@ -42,6 +42,7 @@ public abstract class InteractiveObject {
 
 
     }
+    public abstract void dispose();
 
     public abstract void onBodyHit();
 

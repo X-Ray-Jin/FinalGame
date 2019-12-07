@@ -36,6 +36,7 @@ public class Alien extends Sprite {
     private float stateTimer;
     private boolean runningRight;
     public int jumpCount=0;
+    public boolean alienLanded;
 
     public Alien(PlayScreen screen) {
         //Take in the alien sprite sheet
@@ -74,6 +75,8 @@ public class Alien extends Sprite {
         setBounds(0, 0, 32 / Main.PPM, 32 / Main.PPM);
         setRegion(alienIdle);
         alienIsDead=false;
+        alienLanded=false;
+
     }
 
     public void update(float dt) {
@@ -156,6 +159,7 @@ public class Alien extends Sprite {
     }
     public void hitGround(){
         jumpCount=0;
+        alienLanded=true;
 
     }
 
