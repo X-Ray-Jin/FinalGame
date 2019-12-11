@@ -88,13 +88,19 @@ public class WorldContactListener implements ContactListener {
                 ((Alien)fixB.getUserData()).hitGround();
             }
             break;
+        case Main.ALIEN_BIT | Main.OBJECT_BIT:
+            if(fixA.getFilterData().categoryBits==Main.ALIEN_BIT)
+                ((Alien)fixA.getUserData()).hitGround();
+            else{
+                ((Alien)fixB.getUserData()).hitGround();
+            }
+            break;
         case Main.BULLET_BIT | Main.GROUND_BIT:
             if(fixA.getFilterData().categoryBits == Main.BULLET_BIT)
                 ((InteractiveObject)fixA.getUserData()).dispose();
             //else
               ///  ((InteractiveObject)fixB.getUserData()).dispose();
             break;
-
 
 
 
