@@ -49,7 +49,7 @@ public class Soldier extends Enemies {
         stateTime += dt;
         TextureRegion region;
         region=walkAnimation.getKeyFrame(stateTime,true);
-            if (setToDeath && !death && count>=4) {
+            if (setToDeath && !death && count>=3) {
                 world.destroyBody(b2body);
                 death = true;
                 setRegion(deadAnimation.getKeyFrame(stateTime));
@@ -127,7 +127,7 @@ public class Soldier extends Enemies {
     @Override
     public void hitByBullet() {
         count++;
-        if(count>4) {
+        if(count>3) {
             setToDeath = true;
 
         }

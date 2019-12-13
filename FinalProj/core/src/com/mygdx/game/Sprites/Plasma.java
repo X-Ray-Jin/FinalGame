@@ -39,12 +39,18 @@ public class Plasma extends InteractiveObject {
         //adds 2 to plasmaCount
         Hud.addPlasma(1);
     }
-    @Override
+  /*  @Override
     public void dispose(){
         setCategoryFilter(Main.BULLET_BIT);
         getCell().setTile(null);
         //PlasmaBullet.bulletDead=true;
-    }
+    }*/
+ /* @Override
+  public void bulletDissapear(){
+      setCategoryFilter(Main.BULLET_BIT);
+      getCell().setTile(null);
+     // world.destroyBody(Main.BULLET_BIT);
+  }*/
 
 
 }

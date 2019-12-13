@@ -109,13 +109,14 @@ public class PlayScreen implements Screen {
 
         public void shootTrigger() {
                 pBullet.bulletDead=false;
+                world.destroyBody(pBullet.b2body);
                 pBullet = new PlasmaBullet(this, player.getX(), player.getY());
 
                 if(player.isRunningRight()==true) {
-                    pBullet.b2body.applyLinearImpulse(new Vector2(5.5f, 2), pBullet.b2body.getWorldCenter(), true);
+                    pBullet.b2body.applyLinearImpulse(new Vector2(4.5f, 1), pBullet.b2body.getWorldCenter(), true);
                 }
                 else{
-                    pBullet.b2body.applyLinearImpulse(new Vector2(-5.5f, 2), pBullet.b2body.getWorldCenter(), true);
+                    pBullet.b2body.applyLinearImpulse(new Vector2(-4.5f, 1), pBullet.b2body.getWorldCenter(), true);
 
                 }
 

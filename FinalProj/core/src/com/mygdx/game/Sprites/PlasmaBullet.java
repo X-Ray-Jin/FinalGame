@@ -28,6 +28,7 @@ public class PlasmaBullet extends Bullet  {
         setBounds(getX(),getY(),16/ Main.PPM,16/Main.PPM);
         bulletDead=false;
        // player.isRunningRight();
+       // world.destroyBody(b2body);
     }
     public void update(float dt){
         stTime += dt;
@@ -60,6 +61,7 @@ public class PlasmaBullet extends Bullet  {
 
             //size of the collision body
             shape.setRadius(4.5f / Main.PPM);
+            fdef.density=85f;
 
             fdef.filter.categoryBits = Main.BULLET_BIT;
             fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT | Main.ENEMY_BIT | Main.OBJECT_BIT | Main.BOSS1_BIT;
@@ -76,6 +78,10 @@ public class PlasmaBullet extends Bullet  {
 
 
 
+    }
+    @Override
+    public void bulletDissapear(){
+        world.destroyBody(b2body);
     }
 
 

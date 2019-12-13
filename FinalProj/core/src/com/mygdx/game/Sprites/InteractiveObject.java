@@ -42,7 +42,7 @@ public abstract class InteractiveObject {
 
 
     }
-    public abstract void dispose();
+   // public abstract void bulletDissapear();
 
     public abstract void onBodyHit();
 

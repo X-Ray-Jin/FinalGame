@@ -95,11 +95,12 @@ public class WorldContactListener implements ContactListener {
                 ((Alien)fixB.getUserData()).hitGround();
             }
             break;
-        case Main.BULLET_BIT | Main.GROUND_BIT:
-            if(fixA.getFilterData().categoryBits == Main.BULLET_BIT)
-                ((InteractiveObject)fixA.getUserData()).dispose();
-            //else
-              ///  ((InteractiveObject)fixB.getUserData()).dispose();
+       case Main.BULLET_BIT | Main.GROUND_BIT:
+            if(fixA.getFilterData().categoryBits==Main.ALIEN_BIT)
+               ((PlasmaBullet)fixA.getUserData()).bulletDissapear();
+            else{
+               ((PlasmaBullet)fixB.getUserData()).bulletDissapear();
+            }
             break;
 
 
