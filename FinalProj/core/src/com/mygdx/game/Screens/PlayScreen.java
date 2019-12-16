@@ -102,15 +102,19 @@ public class PlayScreen implements Screen {
         creator = new E51WorldCreator(this);
         //creating player-Alien
         player=new Alien(this);
+
         if(player.levelSwitch==true) {
             map = maploader.load(levelNames[1]);
+            System.out.println(map);
+            System.out.println(player.levelSwitch);
+
 
         }
 
         //soldier = new Soldier(this,.32f,.32f);
 
 
-            pBullet = new PlasmaBullet(this, player.getX(), player.getY());
+        pBullet = new PlasmaBullet(this, player.getX(), player.getY());
 
         Array<PlasmaBullet> pBulletArray = new Array<>();
 
@@ -125,9 +129,7 @@ public class PlayScreen implements Screen {
 
     }
 
-
-
-
+    
         public void shootTrigger() {
                 pBullet.bulletDead=false;
                 world.destroyBody(pBullet.b2body);

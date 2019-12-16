@@ -37,7 +37,7 @@
  </layer>
  <layer id="20" name="Platform" width="145" height="35">
   <data encoding="base64" compression="zlib">
-   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAAAAAAAAAAAAAAAA4MsAT0wAAQ==
+   eJzt0jEOhDAUA1Fuy/1vsPUWCJI44RO9qZDAdoA5DgAAAAAAAOzA+fYB8Hk4hFE4VIvE/1j9T1v2+NbP02/HIVzBofZn8c9XHOrJ7upQ6qyrezhUBw7ls1f3OFSrp7JDiQyH5vdwKMfoFofWZTlUq4dDOTg0fyuV5VCtHg7l4ND8rVR2tkO978Oh+VupLIdq9XAokxnJpfJv9XAokxnJpfJ3PU/6z4vrnr0WODSWS+XvejjUl+FQW//K75Xq2Nmh1h4OrctyqK+HQ32ZHRx6q2d0b1UHh+6f51A+y6E1PaN7qzoqOvQWs89a2aGv8AOorFwk
   </data>
  </layer>
  <layer id="21" name="Background2" width="145" height="35">
@@ -57,7 +57,7 @@
  </layer>
  <layer id="24" name="Graphics/Misc" width="145" height="35">
   <data encoding="base64" compression="zlib">
-   eJzt0sEJwDAQwLAsmwG6/6crBFw4UqQJ/PBaAAAAAAAAAAAAwKk9HcD1PETlISoPUXmIykNUHqLyEJWHqDxE5SEqD1F5iMpDVB6i8hCVh77zTAfwCy/p5gcn
+   eJzt2cENxCAMBMA0m/fd9f9JCRdpMXFgpgBkpJWxxXEAAMBePk8XwOt9ny4AgKnMDqTMDvCfXktKrwWAPsx2pMx2vMU58Cy9c08jM6R37mlkhtjT7Ax579YzO0Peu/V4y0jJECkZIiVD66veY2RofdV7jAyRkiFSMkRKhkjJUL2KvajTn1F1hjrd9Y6Keiv2ok5/RtUZ6nTXO5J6f8OqYGcX4AIQvA==
   </data>
  </layer>
  <objectgroup id="8" name="Ground">

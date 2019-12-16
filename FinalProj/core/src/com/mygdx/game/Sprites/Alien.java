@@ -151,7 +151,7 @@ public class Alien extends Sprite {
 
     public void hit(){
             alienIsDead=true;
-            System.out.println("HIT");
+
 
     }
 
@@ -165,6 +165,7 @@ public class Alien extends Sprite {
     }
     public void levelSwitch(){
         levelSwitch=true;
+
     }
 
 
