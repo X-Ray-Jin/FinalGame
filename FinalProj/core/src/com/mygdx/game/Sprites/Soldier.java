@@ -98,7 +98,7 @@ public class Soldier extends Enemies {
         //fdef.filter.categoryBits = Main.SOLDIER_DEATH_BIT;
 
 
-        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.ALIEN_BIT|Main.OBJECT_BIT|BULLET_BIT;
+        fdef.filter.maskBits = Main.GROUND_BIT |Main.ENEMY_BIT|Main.ALIEN_BIT|Main.OBJECT_BIT|BULLET_BIT;
 
         //setting shape above head
         fdef.shape = shape;

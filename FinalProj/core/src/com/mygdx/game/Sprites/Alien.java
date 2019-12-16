@@ -186,7 +186,7 @@ public class Alien extends Sprite {
 
 
         fdef.filter.categoryBits = Main.ALIEN_BIT;
-        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.OBJECT_BIT|Main.BOSS1_BIT;
+        fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.OBJECT_BIT|Main.BOSS1_BIT|Main.LEVEL_SWITCH_BIT;
 
         //setting shape above head
         fdef.shape = shape;

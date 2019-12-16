@@ -47,7 +47,7 @@
  </layer>
  <layer id="22" name="Plasmas" width="145" height="35">
   <data encoding="base64" compression="zlib">
-   eJzt2kEKACAIBEBf3P+P/aAgCMqdOXsRRTxsFQAAAAA741It2ewK8Dt3DAAAAAAAAAAAADKcZgZlDQEA1rr/S937S2SmvGgCpJwD3w==
+   eJzt2EEOwjAMBMC+uP8/ckVqAqKqiWPPvMDZjVPEcQAAAPCEc/UAQKhfdnzle7DLnDuKyEsH62TMPuNM9ORbkkfHfDueGdiPtyrOLFuZr/etA93lIO8cqvZQ9Vxc6ZpI7lc/Oq9Hp/fdza5T5p3OCvyX9yWnjL1knAkAYGbVbxf/cUBd9pR3UffBPYO5J/Yj846NZss878ineav3N7LbvPTwArvlE8U=
   </data>
  </layer>
  <layer id="23" name="Tube" width="145" height="35">
@@ -57,7 +57,7 @@
  </layer>
  <layer id="24" name="Graphics/Misc" width="145" height="35">
   <data encoding="base64" compression="zlib">
-   eJzt2EsOwjAMBcBetlsk7r9hj0ShiUMcZ2ZbqXLsJ/dzHAAAAER4zC4A4Li3i+yte/SrlozzzFgTe5LFPHacxY5nBtZjV43zqbd6Pt+3GZhdDvqdQ9U5VD1Xj3N2AYOY9f9UzdAV+Yq1QobMPLeWDJlpu9beZe559B7KfFbGWOFZRm6/Zsh+ySnDXN4zlKEm1uJZRi8ZopcM7S3i3UWG6CVDtcz4JpKhvEblIfq+MkSvahla7f9WhXrPi2sR99/Jc3YBlPACAT4XDQ==
+   eJzt0sEJwDAQwLAsmwG6/6crBFw4UqQJ/PBaAAAAAAAAAAAAwKk9HcD1PETlISoPUXmIykNUHqLyEJWHqDxE5SEqD1F5iMpDVB6i8hCVh77zTAfwCy/p5gcn
   </data>
  </layer>
  <objectgroup id="8" name="Ground">

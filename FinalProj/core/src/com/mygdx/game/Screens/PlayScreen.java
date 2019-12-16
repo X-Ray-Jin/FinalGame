@@ -89,10 +89,7 @@ public class PlayScreen implements Screen {
         maploader = new TmxMapLoader();
         String[] levelNames = {"1-1.tmx", "1-2.tmx" };
         map = maploader.load(levelNames[0]);
-        if(player.levelSwitch==true) {
-            map = maploader.load(levelNames[0]+1);
 
-        }
         renderer = new OrthogonalTiledMapRenderer(map, 1/Main.PPM);
 
 
@@ -105,6 +102,10 @@ public class PlayScreen implements Screen {
         creator = new E51WorldCreator(this);
         //creating player-Alien
         player=new Alien(this);
+        if(player.levelSwitch==true) {
+            map = maploader.load(levelNames[1]);
+
+        }
 
         //soldier = new Soldier(this,.32f,.32f);
 
