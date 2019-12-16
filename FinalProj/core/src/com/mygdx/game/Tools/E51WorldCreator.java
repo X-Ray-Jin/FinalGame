@@ -89,6 +89,22 @@ public class E51WorldCreator {
             body.createFixture(fdef);
 
         }
+        //ExitDoor
+        for(MapObject object : map.getLayers().get(12).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / Main.PPM, (rect.getY() + rect.getHeight() / 2) / Main.PPM);
+
+            body = world.createBody(bdef);
+
+            shape.setAsBox(rect.getWidth() / 2 / Main.PPM, rect.getHeight() / 2 / Main.PPM);
+            fdef.shape = shape;
+
+            fdef.filter.categoryBits = Main.LEVEL_SWITCH_BIT;
+
+            body.createFixture(fdef);
+        }
         //creating all soldiers
         soldiers = new Array<Soldier>();
         for(MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)) {

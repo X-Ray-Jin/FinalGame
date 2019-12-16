@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="185" height="35" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="187">
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="185" height="35" tilewidth="32" tileheight="32" infinite="0" nextlayerid="19" nextobjectid="188">
  <tileset firstgid="1" name="Background1" tilewidth="32" tileheight="32" tilecount="100" columns="10">
   <image source="New Project copy 2.png" width="320" height="320"/>
  </tileset>
@@ -26,6 +26,9 @@
  </tileset>
  <tileset firstgid="111" name="Tube" tilewidth="32" tileheight="32" tilecount="2" columns="1">
   <image source="Tube.png" width="32" height="64"/>
+ </tileset>
+ <tileset firstgid="113" name="ExitDoor" tilewidth="32" tileheight="64" tilecount="1" columns="1">
+  <image source="ExitDoor.png" width="32" height="64"/>
  </tileset>
  <layer id="5" name="Background1" width="185" height="35">
   <data encoding="base64" compression="zlib">
@@ -54,7 +57,7 @@
  </layer>
  <layer id="7" name="Graphics/Misc" width="185" height="35">
   <data encoding="base64" compression="zlib">
-   eJzt2LFqw0AQRVH/bCBN/r91kyIGV7bM3NmcA+qflodmtLcbAAAAAAAAACf5jj81p70PALtMz2Wz78yzq+cDrvc1HQA+7FnHp3eid2ZnYZ+YPgMePev4z+8DJ7CrcLpKx9+d37V9iI5KxzlH4b/sr3LHy9nYo9yjq7NN3xXZY2b8p46zy1Xfh3KPytnYo9yjcrZX2F1mlHtUzsYe5R6Vs7FHuUdT2dyrzPjUeeo4pyv3qJyNPco9Kmdjj3KPytnYo9yjcjbgTHcwMJhr
+   eJzt2DEOwkAMBMB8FomGgv83NBQgpSIXvHZmpPSb0yp2btsAAAAAAAAAmOQe/qSZ9j4A9FI9l82+mWeXng9Y71YdAE621/HqnejI7EzYJ6rPgG97HX+8H5jArsJ0KR0/Or/T9iFypHScORL+yz4ldzw5G30k92h1tuq7IntMjSt1nF5WfR+Se5ScjT6Se5Sc7Rd2lxrJPUrORh/JPUrORh/JParK5l6lxlnnqeNMl9yj5Gz0kdyj5Gz0kdyj5Gz0kdyj5GxX9KwOAH/wAninmNw=
   </data>
  </layer>
  <objectgroup id="8" name="Ground">
@@ -174,7 +177,7 @@
   <object id="163" x="3326" y="672" width="3" height="98"/>
   <object id="164" x="1598.67" y="480" width="2.66667" height="65.3333"/>
   <object id="167" x="2694" y="674" width="19" height="412"/>
-  <object id="185" x="5909.09" y="6.06061" width="15.1515" height="1118.18"/>
+  <object id="185" x="5913.09" y="6.06061" width="15.1515" height="1118.18"/>
   <object id="186" x="-12.1212" y="-6.06061" width="15.1515" height="1127.27"/>
  </objectgroup>
  <objectgroup id="16" name="Soldiers">
@@ -194,5 +197,8 @@
  </objectgroup>
  <objectgroup id="17" name="Boss">
   <object id="183" x="5312" y="1056" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup id="18" name="ExitDoor">
+  <object id="187" x="5892.5" y="1003" width="19.5" height="83.5"/>
  </objectgroup>
 </map>

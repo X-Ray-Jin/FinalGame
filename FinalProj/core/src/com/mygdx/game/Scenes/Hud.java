@@ -39,7 +39,7 @@ public class Hud implements Disposable {
         plasmaCount = 1000;
         score = 0;
 
-        viewport = new FitViewport(Main.V_WIDTH, Main.V_HEIGHT, new OrthographicCamera());
+        viewport = new FitViewport(Main.Game_WIDTH, Main.Game_HEIGHT, new OrthographicCamera());
         stage = new Stage (viewport, sb);
 
         Table table = new Table();

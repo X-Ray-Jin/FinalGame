@@ -77,9 +77,9 @@ public class WorldContactListener implements ContactListener {
             break;
         case Main.ALIEN_BIT | Main.BOSS1_BIT:
             if(fixA.getFilterData().categoryBits == Main.ALIEN_BIT)
-                ((Alien)fixA.getUserData()).hit1();
+                ((Alien)fixA.getUserData()).hit();
             else
-                ((Alien)fixB.getUserData()).hit1();
+                ((Alien)fixB.getUserData()).hit();
             break;
         case Main.ALIEN_BIT | Main.GROUND_BIT:
             if(fixA.getFilterData().categoryBits==Main.ALIEN_BIT)
@@ -93,6 +93,13 @@ public class WorldContactListener implements ContactListener {
                 ((Alien)fixA.getUserData()).hitGround();
             else{
                 ((Alien)fixB.getUserData()).hitGround();
+            }
+            break;
+        case Main.ALIEN_BIT | Main.LEVEL_SWITCH_BIT:
+            if(fixA.getFilterData().categoryBits==Main.ALIEN_BIT)
+                ((Alien)fixA.getUserData()).levelSwitch();
+            else{
+                ((Alien)fixB.getUserData()).levelSwitch();
             }
             break;
        case Main.BULLET_BIT | Main.GROUND_BIT:

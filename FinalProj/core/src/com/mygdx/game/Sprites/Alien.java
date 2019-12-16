@@ -37,6 +37,7 @@ public class Alien extends Sprite {
     private boolean runningRight;
     public int jumpCount=0;
     public boolean alienLanded;
+    public boolean levelSwitch;
 
     public Alien(PlayScreen screen) {
         //Take in the alien sprite sheet
@@ -62,7 +63,7 @@ public class Alien extends Sprite {
         alienJump = new Animation(0.11f, frames);
        // frames.clear();
 
-        for (int i =9; i < 11; i++)
+        for (int i =10; i < 11; i++)
             frames.add(new TextureRegion(getTexture(), i * 34, 4, 32, 32));
         alienShoot = new Animation(0.06f, frames);
         for (int i =0; i < 2; i++)
@@ -76,6 +77,7 @@ public class Alien extends Sprite {
         setRegion(alienIdle);
         alienIsDead=false;
         alienLanded=false;
+        levelSwitch = false;
 
     }
 
@@ -152,15 +154,17 @@ public class Alien extends Sprite {
             System.out.println("HIT");
 
     }
-    public void hit1(){
-        alienIsDead=true;
-        System.out.println("HIT");
 
-    }
     public void hitGround(){
         jumpCount=0;
         alienLanded=true;
 
+    }
+    public float getStateTimer(){
+        return stateTimer;
+    }
+    public void levelSwitch(){
+        levelSwitch=true;
     }
 
 
@@ -179,6 +183,7 @@ public class Alien extends Sprite {
 
         //size of the collision body
         shape.setRadius(13.4f / Main.PPM);
+
 
         fdef.filter.categoryBits = Main.ALIEN_BIT;
         fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT|Main.ENEMY_BIT|Main.OBJECT_BIT|Main.BOSS1_BIT;

@@ -2,14 +2,15 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Screens.MainMenuScreen;
 import com.mygdx.game.Screens.PlayScreen;
 
 public class Main extends Game {
 
 	//virtual width/height in game
     //game screen size
-	public static final int V_WIDTH = 500;
-	public static final int V_HEIGHT = 240;
+	public static final int Game_WIDTH = 500;
+	public static final int Game_HEIGHT = 240;
 	//scaling pixels per meter
 	public static final float PPM = 100;
 	public SpriteBatch batch;
@@ -24,13 +25,15 @@ public class Main extends Game {
 	public static final short SOLDIER_DEATH_BIT=128;
 	public static final short DISSAPEAR_BIT=256;
 	public static final short BOSS1_BIT=512;
+	public static final short LEVEL_SWITCH_BIT=1024;
 
 
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new PlayScreen(this));
+		//setScreen(new PlayScreen(this));
+		this.setScreen(new MainMenuScreen(this));
 	}
 
 	@Override

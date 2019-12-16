@@ -61,7 +61,7 @@ public class PlasmaBullet extends Bullet  {
 
             //size of the collision body
             shape.setRadius(4.5f / Main.PPM);
-            fdef.density=85f;
+            fdef.density=75f;
 
             fdef.filter.categoryBits = Main.BULLET_BIT;
             fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT | Main.ENEMY_BIT | Main.OBJECT_BIT | Main.BOSS1_BIT;
@@ -81,7 +81,7 @@ public class PlasmaBullet extends Bullet  {
     }
     @Override
     public void bulletDissapear(){
-        world.destroyBody(b2body);
+       // world.destroyBody(b2body);
     }
 
 
