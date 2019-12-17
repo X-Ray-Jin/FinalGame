@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Main;
 import com.mygdx.game.Screens.PlayScreen;
 
-public class PlasmaBullet extends Bullet  {
+public class PlasmaBullet extends Bullet {
 
     private float stTime;
     private Animation<TextureRegion> shootAnimation;

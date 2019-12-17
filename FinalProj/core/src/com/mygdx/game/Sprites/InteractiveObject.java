@@ -23,8 +23,8 @@ public abstract class InteractiveObject {
     protected Fixture fixture;
 
     public InteractiveObject(PlayScreen screen, Rectangle bounds){
-        this.world = screen.getWorld();
-        this.map = screen.getMap();
+        world = screen.getWorld();
+        map = screen.getMap();
         this.bounds = bounds;
 
         BodyDef bdef = new BodyDef();
@@ -39,10 +39,7 @@ public abstract class InteractiveObject {
         shape.setAsBox(bounds.getWidth() / 2/Main.PPM, bounds.getHeight() / 2/Main.PPM);
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
-
-
     }
-   // public abstract void bulletDissapear();
 
     public abstract void onBodyHit();
 
@@ -51,6 +48,7 @@ public abstract class InteractiveObject {
         filter.categoryBits = filterBit;
         fixture.setFilterData(filter);
     }
+
     public TiledMapTileLayer.Cell getCell(){
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(3);
         return layer.getCell((int)(body.getPosition().x * Main.PPM/32),(int)(body.getPosition().y * Main.PPM/32));
