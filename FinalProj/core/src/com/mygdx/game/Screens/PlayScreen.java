@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -59,49 +58,60 @@ public class PlayScreen implements Screen {
     public State state = State.RUN;
     public State pause = State.PAUSE;
     private String[] levelNames = {"1-1.tmx", "1-2.tmx" };
-
-    private Array<Body> bodies = new Array<>();
     private Array<SpriteObject> objectsToRemove = new Array<>();
     private Sound shoot;
+    private boolean switchLevel = false;
 
-    public PlayScreen(Main game, GameOverScreen gameOverScreen) {
+    public PlayScreen(Main game, GameOverScreen gameOverScreen){
         this.game = game;
         pauseScreen = new PauseScreen(game, this);
         this.gameOverScreen = gameOverScreen;
-        onNewWorldCreate();
+        init();
+        loadLevel(levelNames[0]);
         shoot = Main.manager.get("Audio/laser7.ogg", Sound.class);
     }
 
-    public void onNewWorldCreate(){
+    // initialize all the stuff we need only one time
+    private void init() {
+        // graphics
         atlas = new TextureAtlas("Alien_And_Enemies.atlas");
         bullAtlas = new TextureAtlas("Plasma_Ammo.atlas");
         FBossAtlas = new TextureAtlas("CHB.atlas");
 
-        gamecam= new OrthographicCamera();
+        // camera, view, user interface, renderer
+        gamecam = new OrthographicCamera();
         //game screen set size: FitviewPort maintains aspect ratio
         gamePort = new FitViewport(Main.Game_WIDTH / Main.PPM, Main.Game_HEIGHT/Main.PPM, gamecam);
-
         hud = new Hud(game.batch);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / Main.PPM);
 
+        // utility to load a tmx map
         maploader = new TmxMapLoader();
 
-        map = maploader.load(levelNames[0]);
-
-        renderer = new OrthogonalTiledMapRenderer(map, 1/Main.PPM);
-
-        gamecam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2,0);
-
-        //gravity
-        world = new World(new Vector2(0,-10), true);
+        // physics
+        world = new World(new Vector2(0, -10), true);
+        world.setContactListener(new WorldContactListener(this));
         b2dr = new Box2DDebugRenderer();
 
-        //creating player-Alien
+        // level objects creator
+        creator = new E51WorldCreator(this);
+    }
+
+    public void loadLevel(String levelName) {
+        map = maploader.load(levelName);
+        renderer.setMap(map);
+
+        // create world objects
+        creator.createObjects(map);
+
+        // create player-Alien
         player = new Alien(this);
 
-        creator = new E51WorldCreator(this);
-
-        world.setContactListener(new WorldContactListener());
+        gamecam.position.set(gamePort.getWorldWidth() / 2,
+                        gamePort.getWorldHeight() / 2, 0);
+        switchLevel = false;
     }
+
 
     public TextureAtlas getFBossAtlas(){
         return FBossAtlas;
@@ -175,13 +185,17 @@ public class PlayScreen implements Screen {
         // update the physics world and handle collisions
         // How many times to calculate per second-how 2 bodies react on collision (higher = more precise)
         world.step(1 / 60f, 6, 2);
+        // check objects if they should be removed and collect them
+        for (SpriteObject object : creator.getObjects()) {
+            if (object.isMarkedForRemoval())
+                objectsToRemove.add(object);
+        }
 
         // actually remove the objects and destroy their physics body
         for (SpriteObject object : objectsToRemove) {
             creator.getObjects().removeValue(object, true);
             world.destroyBody(object.getBody());
         }
-
         // clear the temporal collection of removed objects
         objectsToRemove.clear();
 
@@ -208,25 +222,16 @@ public class PlayScreen implements Screen {
         game.batch.begin();
         player.draw(game.batch);
 
-        if(player.levelSwitch==true) {
-
-            world.getBodies(bodies);
-            for (Body body : bodies)
-                world.destroyBody(body);
-            bodies.clear();
-            map = maploader.load(levelNames[1]);
-            System.out.println(map);
-            System.out.println(player.levelSwitch);
-            renderer = new OrthogonalTiledMapRenderer(map, 1/Main.PPM);
-            onNewWorldCreate();
+        if (switchLevel) {
+            loadLevel(levelNames[1]);
+        } else {
+            game.batch.begin();
+            player.draw(game.batch);
+            for (SpriteObject object : creator.getObjects()) {
+                object.draw(game.batch);
+            }
+            game.batch.end();
         }
-
-        for (SpriteObject bullet : creator.getObjects()) {
-            bullet.draw(game.batch);
-        }
-
-        game.batch.end();
-
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
@@ -283,6 +288,11 @@ public class PlayScreen implements Screen {
                 break;
         }
     }
+
+    public void switchLevel() {
+        switchLevel = true;
+    }
+
 
     public boolean gameOver(){
         if(player.currentState==Alien.State.DEAD && player.getStateTimer()>1){

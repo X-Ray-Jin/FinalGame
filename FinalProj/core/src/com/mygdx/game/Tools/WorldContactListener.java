@@ -7,12 +7,19 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.Main;
+import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Alien;
 import com.mygdx.game.Sprites.Bullet;
 import com.mygdx.game.Sprites.Enemy;
 import com.mygdx.game.Sprites.InteractiveObject;
 
 public class WorldContactListener implements ContactListener {
+
+    private PlayScreen playScreen;
+
+    public WorldContactListener(PlayScreen playScreen) {
+        this.playScreen = playScreen;
+    }
 
     @Override
     public void beginContact(Contact contact) {
@@ -21,7 +28,7 @@ public class WorldContactListener implements ContactListener {
 
         int collisionDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
         int fixACat = fixA.getFilterData().categoryBits;
-        int fixBCat = fixB.getFilterData().categoryBits;
+        //        int fixBCat = fixB.getFilterData().categoryBits;
         switch(collisionDef){
             case Main.ENEMY_BIT | Main.BULLET_BIT:
             case Main.BOSS1_BIT | Main.BULLET_BIT:
@@ -67,9 +74,8 @@ public class WorldContactListener implements ContactListener {
                 else((Alien) fixB.getUserData()).hitGround();
                 break;
             case Main.ALIEN_BIT | Main.LEVEL_SWITCH_BIT:
-                if (fixACat == Main.ALIEN_BIT)
-                    ((Alien) fixA.getUserData()).levelSwitch();
-                else((Alien) fixB.getUserData()).levelSwitch();
+                System.out.println("switch");
+                playScreen.switchLevel();
                 break;
             case Main.BULLET_BIT | Main.GROUND_BIT:
             case Main.BULLET_BIT | Main.OBJECT_BIT:

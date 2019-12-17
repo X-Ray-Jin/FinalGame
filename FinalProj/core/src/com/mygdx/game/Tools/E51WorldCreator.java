@@ -21,17 +21,23 @@ import com.mygdx.game.Sprites.Soldier;
 import com.mygdx.game.Sprites.SpriteObject;
 
 public class E51WorldCreator {
-    public Array<SpriteObject> getObjects() {
-        return objects;
-    }
 
     private PlayScreen screen;
+    private World world;
+    private Array<Body> bodies = new Array<>();
     private Array<SpriteObject> objects = new Array<>();
 
     public E51WorldCreator(PlayScreen screen) {
         this.screen = screen;
-        World world = screen.getWorld();
-        TiledMap map = screen.getMap();
+        world = screen.getWorld();
+    }
+
+    public void createObjects(TiledMap map) {
+        world.getBodies(bodies);
+        for (Body body : bodies)
+            world.destroyBody(body);
+        bodies.clear();
+        objects.clear();
 
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -67,15 +73,11 @@ public class E51WorldCreator {
             fdef.filter.categoryBits = Main.OBJECT_BIT;
 
             body.createFixture(fdef);
-
-
         }
 
         //Plasma fixtures
         for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-
             new Plasma(screen, rect);
         }
 
@@ -94,7 +96,6 @@ public class E51WorldCreator {
             fdef.filter.categoryBits = Main.OBJECT_BIT;
 
             body.createFixture(fdef);
-
         }
 
         //ExitDoor
@@ -117,22 +118,16 @@ public class E51WorldCreator {
         //creating all soldiers
         for (MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-
             objects.add(new Soldier(screen, rect.getX() / Main.PPM, rect.getY() / Main.PPM));
         }
 
         for (MapObject object : map.getLayers().get(11).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-
             objects.add(new BossLevel1(screen, rect.getX() / Main.PPM, rect.getY() / Main.PPM));
         }
 
         for (MapObject object : map.getLayers().get(13).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-
             objects.add(new BossLevel2(screen, rect.getX() / Main.PPM, rect.getY() / Main.PPM));
         }
     }
@@ -149,5 +144,9 @@ public class E51WorldCreator {
             pBullet.getBody().applyLinearImpulse(new Vector2(-4.5f, 1f),
                             pBullet.getBody().getWorldCenter(), true);
         }
+    }
+
+    public Array<SpriteObject> getObjects() {
+        return objects;
     }
 }
