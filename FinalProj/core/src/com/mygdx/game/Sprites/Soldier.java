@@ -1,9 +1,8 @@
 package com.mygdx.game.Sprites;
-import com.badlogic.gdx.audio.Sound;
 import static com.mygdx.game.Main.BULLET_BIT;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -20,12 +19,14 @@ public class Soldier extends Enemy {
     private Animation<TextureRegion> deadAnimation;
     private Animation<TextureRegion> idleAnimation;
     private Array<TextureRegion> frames;
-    private boolean setToDeath;
-    private boolean death;
+    private boolean die;
+    private boolean dead;
     public State currentState;
     private int count = 0;
     private boolean runningRight;
     private Sound deathSound;
+
+    private float deathDelay;
 
     public Soldier(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -49,12 +50,12 @@ public class Soldier extends Enemy {
         stateTime = 0;
         setBounds(getX(), getY(), 32 / Main.PPM, 32 / Main.PPM);
 
-        setToDeath = false;
-        death = false;
+        die = false;
+        dead = false;
         deathSound=Main.manager.get("Audio/death.ogg", Sound.class);
     }
     public void dsound(){
-        if(setToDeath==true){
+        if (die == true) {
             deathSound.play();
         }
     }
@@ -63,25 +64,23 @@ public class Soldier extends Enemy {
     public void update(float dt){
         stateTime += dt;
         TextureRegion region;
-        region=walkAnimation.getKeyFrame(stateTime,true);
-            if (setToDeath && !death && count>=3) {
-                dsound();
-                world.destroyBody(b2body);
-                death = true;
-                setRegion(deadAnimation.getKeyFrame(stateTime));
-                stateTime = 0;
-                // setRegion(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"),34,0,32,32));
-                //count =0;
-                //adds score and plasma
+        region = walkAnimation.getKeyFrame(stateTime, true);
+        if (die) {
+            dsound();
+            deathDelay = .5f;
+            setRegion(deadAnimation.getKeyFrame(stateTime));
 
-                Hud.addScore(50);
-                Hud.addPlasma(3);
-
-        } else if (!death) {
+            //adds score and plasma
+            Hud.addScore(50);
+            Hud.addPlasma(3);
+            die = false;
+            dead = true;
+        } else if (!dead) {
             b2body.setLinearVelocity(velocity);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
-        }
+        } else deathDelay -= dt;
+
 
         if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
@@ -93,6 +92,11 @@ public class Soldier extends Enemy {
 
         if (getX() < screen.getPlayer().getX() + 2.8f)
             getBody().setActive(true);
+        if (getX() < screen.getPlayer().getX() + 2.8f)
+            getBody().setActive(true);
+        if (dead && deathDelay <= 0f) {
+            markForRemoval(true);
+        }
     }
 
     @Override
@@ -129,22 +133,12 @@ public class Soldier extends Enemy {
          */
 
     }
-    //Makes soldier dissapear when dead after .5 seconds
-    @Override
-    public void draw(Batch batch){
-        if (!death || stateTime < .5f) {
-            super.draw(batch);
-        }
-    }
 
     @Override
     public void hitByBullet() {
         count++;
         if (count > 3) {
-            setToDeath = true;
+            die = true;
         }
-
-        //on death add 20 points
-        //  Hud.addScore(20);
     }
 }

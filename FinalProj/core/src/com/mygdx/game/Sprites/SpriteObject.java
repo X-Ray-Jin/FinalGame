@@ -10,7 +10,7 @@ public abstract class SpriteObject extends Sprite {
     protected PlayScreen screen;
     protected Body b2body;
 
-    protected boolean markedForRemove = false;
+    private boolean markedForRemove = false;
 
     public SpriteObject(PlayScreen screen, float x, float y) {
         super();
