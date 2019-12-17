@@ -1,5 +1,7 @@
 package com.mygdx.game.Sprites;
 import com.badlogic.gdx.audio.Sound;
+import static com.mygdx.game.Main.BULLET_BIT;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,10 +13,7 @@ import com.mygdx.game.Main;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
 
-import static com.mygdx.game.Main.BULLET_BIT;
-import static com.mygdx.game.Main.SOLDIER_DEATH_BIT;
-
-public class Soldier extends Enemies {
+public class Soldier extends Enemy {
     public enum State {SRUNNING,SDEAD, SIDLE}
     private float stateTime;
     private Animation<TextureRegion> walkAnimation;
@@ -30,19 +29,25 @@ public class Soldier extends Enemies {
 
     public Soldier(PlayScreen screen, float x, float y) {
         super(screen, x, y);
-        frames = new Array<TextureRegion>();
-        for(int i=3;i<6; i++ )
-            frames.add(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"), i *34,4,32,32));
-        walkAnimation = new Animation(0.3f,frames);
-        for(int i=0;i<2; i++ )
-            frames.add(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"), i *34,4,32,32));
-        deadAnimation = new Animation(0.3f,frames);
-        for(int i=2;i<3; i++ )
-            frames.add(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"), i *34,4,32,32));
-        idleAnimation = new Animation(0.2f,frames);
+        frames = new Array<>();
+        for (int i = 3; i < 6; i++)
+            frames.add(new TextureRegion(
+                            screen.getAtlas().findRegion("Small_Enemy"), i * 34,
+                            4, 32, 32));
+        walkAnimation = new Animation<>(0.3f, frames);
+        for (int i = 0; i < 2; i++)
+            frames.add(new TextureRegion(
+                            screen.getAtlas().findRegion("Small_Enemy"), i * 34,
+                            4, 32, 32));
+        deadAnimation = new Animation<>(0.3f, frames);
+        for (int i = 2; i < 3; i++)
+            frames.add(new TextureRegion(
+                            screen.getAtlas().findRegion("Small_Enemy"), i * 34,
+                            4, 32, 32));
+        idleAnimation = new Animation<>(0.2f, frames);
 
         stateTime = 0;
-        setBounds(getX(),getY(),32/Main.PPM,32/Main.PPM);
+        setBounds(getX(), getY(), 32 / Main.PPM, 32 / Main.PPM);
 
         setToDeath = false;
         death = false;
@@ -53,6 +58,8 @@ public class Soldier extends Enemies {
             deathSound.play();
         }
     }
+
+    @Override
     public void update(float dt){
         stateTime += dt;
         TextureRegion region;
@@ -70,13 +77,12 @@ public class Soldier extends Enemies {
                 Hud.addScore(50);
                 Hud.addPlasma(3);
 
-            }
-
-        else if(!death) {
+        } else if (!death) {
             b2body.setLinearVelocity(velocity);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
         }
+
         if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
             runningRight = false;
@@ -85,51 +91,48 @@ public class Soldier extends Enemies {
             runningRight = true;
         }
 
-
+        if (getX() < screen.getPlayer().getX() + 2.8f)
+            getBody().setActive(true);
     }
 
-
     @Override
-    protected void defineEnemies() {
+    protected void defineBody() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(getX(), getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
 
-
         b2body = world.createBody(bdef);
-
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
 
-
         //size of the collision body
         shape.setRadius(12.8f / Main.PPM);
         //fdef.filter.categoryBits = Main.SOLDIER_DEATH_BIT;
-
 
         fdef.filter.maskBits = Main.GROUND_BIT |Main.ENEMY_BIT|Main.ALIEN_BIT|Main.OBJECT_BIT|BULLET_BIT;
 
         //setting shape above head
         fdef.shape = shape;
 
-       // fdef.filter.categoryBits = Main.SOLDIER_DEATH_BIT;
+        // fdef.filter.categoryBits = Main.SOLDIER_DEATH_BIT;
         fdef.filter.categoryBits = Main.ENEMY_BIT;
 
         b2body.createFixture(fdef).setUserData(this);
 
-       /* CircleShape body = new CircleShape();
+        /* CircleShape body = new CircleShape();
         fdef.shape=body;
         body.setRadius(12.8f/Main.PPM);
         fdef.filter.categoryBits = SOLDIER_DEATH_BIT;
         b2body.createFixture(fdef).setUserData(this);
 
-*/
+         */
 
     }
-//Makes soldier dissapear when dead after .5 seconds
+    //Makes soldier dissapear when dead after .5 seconds
+    @Override
     public void draw(Batch batch){
-        if(!death || stateTime <.5f){
+        if (!death || stateTime < .5f) {
             super.draw(batch);
         }
     }
@@ -137,14 +140,11 @@ public class Soldier extends Enemies {
     @Override
     public void hitByBullet() {
         count++;
-        if(count>3) {
+        if (count > 3) {
             setToDeath = true;
-
         }
 
-
         //on death add 20 points
-      //  Hud.addScore(20);
-
+        //  Hud.addScore(20);
     }
 }

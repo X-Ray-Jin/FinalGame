@@ -1,5 +1,8 @@
 package com.mygdx.game.Sprites;
 
+import static com.mygdx.game.Main.BULLET_BIT;
+import static com.mygdx.game.Main.ENEMY_BIT;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,10 +14,7 @@ import com.mygdx.game.Main;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
 
-import static com.mygdx.game.Main.BULLET_BIT;
-import static com.mygdx.game.Main.ENEMY_BIT;
-
-public class BossLevel2 extends Enemies {
+public class BossLevel2 extends Enemy {
     private Animation<TextureRegion> walkAnimation;
     private Animation<TextureRegion> deadAnimation;
     private Animation<TextureRegion> idleAnimation;
@@ -31,7 +31,7 @@ public class BossLevel2 extends Enemies {
     public BossLevel2(PlayScreen screen, float x, float y) {
         super(screen, x, y);
 
-        frames = new Array<TextureRegion>();
+        frames = new Array<>();
         for(int i=0;i<3; i++ )
             frames.add(new TextureRegion(screen.getFBossAtlas().findRegion("CHB"), i *66,2,64,96));
         walkAnimation = new Animation(0.3f,frames);
@@ -84,10 +84,12 @@ public class BossLevel2 extends Enemies {
             runningRight = true;
         }
 
+        if (getX() < screen.getPlayer().getX() + 2.2f)
+            getBody().setActive(true);
     }
 
     @Override
-    protected void defineEnemies() {
+    protected void defineBody() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(getX(), getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -115,6 +117,7 @@ public class BossLevel2 extends Enemies {
 
         b2body.createFixture(fdef).setUserData(this);
     }
+    @Override
     public void draw(Batch batch){
         if(!death || stateTime <.5f){
             super.draw(batch);

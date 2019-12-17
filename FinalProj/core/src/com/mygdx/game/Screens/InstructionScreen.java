@@ -8,13 +8,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Main;
-import com.mygdx.game.State;
 
 
 
@@ -81,19 +78,19 @@ public class InstructionScreen extends Main implements Screen {
         font = new BitmapFont(Gdx.files.internal("font2.fnt"));
 
         Instructions = new Label("Instructions Screen\n" +
-                "\n" +
-                "-Movement:" +
-                "   Use either the direction arrow keys or WSAD keys to \n control your movement.\n" +
-                "\n" +
-                "-Collect Plasma:\n" +
-                "   Collect plasma throughout the map to arm your\n" +
-                "\n" +
-                "-Shoot:" +
-                "   Press the spacebar to fire your plasma at the enemies.\n" +
-                "\n" +
-                "-Enemies:" +
-                "   Attack or avoid the enemies. Contact with the enemies \n will result in GAME OVER." +
-                " It takes 3 plasma shots to take down an \n enemy and 7 plasma shots for the boss.\n", new Label.LabelStyle(font, Color.GREEN));
+                        "\n" +
+                        "-Movement:" +
+                        "   Use either the direction arrow keys or WSAD keys to \n control your movement.\n" +
+                        "\n" +
+                        "-Collect Plasma:\n" +
+                        "   Collect plasma throughout the map to arm your\n" +
+                        "\n" +
+                        "-Shoot:" +
+                        "   Press the spacebar to fire your plasma at the enemies.\n" +
+                        "\n" +
+                        "-Enemies:" +
+                        "   Attack or avoid the enemies. Contact with the enemies \n will result in GAME OVER." +
+                        " It takes 3 plasma shots to take down an \n enemy and 7 plasma shots for the boss.\n", new Label.LabelStyle(font, Color.GREEN));
         Instructions.setPosition(20, 10);
 
 

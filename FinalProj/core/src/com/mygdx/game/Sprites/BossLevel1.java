@@ -1,5 +1,8 @@
 package com.mygdx.game.Sprites;
 
+import static com.mygdx.game.Main.BULLET_BIT;
+import static com.mygdx.game.Main.ENEMY_BIT;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,10 +14,7 @@ import com.mygdx.game.Main;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
 
-import static com.mygdx.game.Main.BULLET_BIT;
-import static com.mygdx.game.Main.ENEMY_BIT;
-
-public class BossLevel1 extends Enemies {
+public class BossLevel1 extends Enemy {
     private Animation<TextureRegion> walkAnimation;
     private Animation<TextureRegion> deadAnimation;
     private Animation<TextureRegion> idleAnimation;
@@ -31,18 +31,18 @@ public class BossLevel1 extends Enemies {
     public BossLevel1(PlayScreen screen, float x, float y) {
         super(screen, x, y);
 
-        frames = new Array<TextureRegion>();
+        frames = new Array<>();
         for(int i=5;i<8; i++ )
-            frames.add(new TextureRegion(screen.getAtlat().findRegion("Small_Boss"), i *34,3,34,34));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("Small_Boss"), i *34,3,34,34));
         walkAnimation = new Animation(0.3f,frames);
         for(int i=0;i<2; i++ )
-            frames.add(new TextureRegion(screen.getAtlat().findRegion("Small_Boss"), i *34,3,34,34));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("Small_Boss"), i *34,3,34,34));
         deadAnimation = new Animation(0.3f,frames);
         for(int i=2;i<3; i++ )
-            frames.add(new TextureRegion(screen.getAtlat().findRegion("Small_Boss"), i *34,3,34,34));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("Small_Boss"), i *34,3,34,34));
         idleAnimation = new Animation(0.2f,frames);
         for(int i=3;i<5; i++ )
-            frames.add(new TextureRegion(screen.getAtlat().findRegion("Small_Boss"), i *34,3,34,34));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("Small_Boss"), i *34,3,34,34));
         shootAnimation = new Animation(0.1f,frames);
 
         stateTime = 0;
@@ -50,9 +50,6 @@ public class BossLevel1 extends Enemies {
 
         setToDeath = false;
         death = false;
-
-
-
     }
     @Override
     public void update(float dt) {
@@ -84,10 +81,12 @@ public class BossLevel1 extends Enemies {
             runningRight = true;
         }
 
+        if (getX() < screen.getPlayer().getX() + 2.2f)
+            getBody().setActive(true);
     }
 
     @Override
-    protected void defineEnemies() {
+    protected void defineBody() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(getX(), getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -115,6 +114,7 @@ public class BossLevel1 extends Enemies {
 
         b2body.createFixture(fdef).setUserData(this);
     }
+    @Override
     public void draw(Batch batch){
         if(!death || stateTime <.5f){
             super.draw(batch);

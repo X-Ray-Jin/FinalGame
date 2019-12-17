@@ -6,40 +6,26 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Main;
+import com.mygdx.game.Main.State;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Sprites.Alien;
 import com.mygdx.game.Sprites.BossLevel1;
 import com.mygdx.game.Sprites.BossLevel2;
-import com.mygdx.game.Sprites.Enemies;
-import com.mygdx.game.Sprites.PlasmaBullet;
-
-import com.mygdx.game.Sprites.Soldier;
-import com.mygdx.game.State;
+import com.mygdx.game.Sprites.SpriteObject;
 import com.mygdx.game.Tools.E51WorldCreator;
 import com.mygdx.game.Tools.WorldContactListener;
-import com.mygdx.game.Sprites.Soldier;
 
 public class PlayScreen implements Screen {
     private Main game;
@@ -57,7 +43,6 @@ public class PlayScreen implements Screen {
 
     private E51WorldCreator creator;
 
-
     private TmxMapLoader maploader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
@@ -68,79 +53,29 @@ public class PlayScreen implements Screen {
 
     //sprite(s)
     private Alien player;
-    private Soldier soldier;
-    private PlasmaBullet pBullet;
+    //    private Soldier soldier;
     private BossLevel1 boss1;
     private BossLevel2 boss2;
     public State state = State.RUN;
     public State pause = State.PAUSE;
     private String[] levelNames = {"1-1.tmx", "1-2.tmx" };
 
-    Array<Body> bodies = new Array<>();
-
+    private Array<Body> bodies = new Array<>();
+    private Array<SpriteObject> objectsToRemove = new Array<>();
     private Sound shoot;
 
-
-    public PlayScreen(Main game, GameOverScreen gameOverScreen){
-        atlas = new TextureAtlas("Alien_And_Enemies.atlas");
-        bullAtlas = new TextureAtlas("Plasma_Ammo.atlas");
-        FBossAtlas = new TextureAtlas("CHB.atlas");
-
-
-        this.game=game;
-        this.pauseScreen = new PauseScreen(game, this);
+    public PlayScreen(Main game, GameOverScreen gameOverScreen) {
+        this.game = game;
+        pauseScreen = new PauseScreen(game, this);
         this.gameOverScreen = gameOverScreen;
-
-
-        gamecam= new OrthographicCamera();
-        //game screen set size: FitviewPort maintains aspect ratio
-        gamePort = new FitViewport(Main.Game_WIDTH / Main.PPM, Main.Game_HEIGHT/Main.PPM, gamecam);
-
-        hud = new Hud(game.batch);
-
-        maploader = new TmxMapLoader();
-        // String[] levelNames = {"1-1.tmx", "1-2.tmx" };
-        map = maploader.load(levelNames[1]);
-
-        renderer = new OrthogonalTiledMapRenderer(map, 1/Main.PPM);
-
-
-
-        gamecam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2,0);
-
-        //gravity
-        world = new World(new Vector2(0,-10), true);
-        b2dr = new Box2DDebugRenderer();
-        creator = new E51WorldCreator(this);
-        //creating player-Alien
-        player=new Alien(this);
-
-
-        //soldier = new Soldier(this,.32f,.32f);
-
-
-        pBullet = new PlasmaBullet(this, player.getX(), player.getY());
-
-        Array<PlasmaBullet> pBulletArray = new Array<>();
-
-        pBulletArray.add(new PlasmaBullet(this, player.getX(), player.getY()));
-
-        world.setContactListener(new WorldContactListener());
-        System.out.println(pBulletArray);
-
-        shoot=Main.manager.get("Audio/laser7.ogg", Sound.class);
-
-
-
+        onNewWorldCreate();
+        shoot = Main.manager.get("Audio/laser7.ogg", Sound.class);
     }
+
     public void onNewWorldCreate(){
         atlas = new TextureAtlas("Alien_And_Enemies.atlas");
         bullAtlas = new TextureAtlas("Plasma_Ammo.atlas");
         FBossAtlas = new TextureAtlas("CHB.atlas");
-
-        this.game=game;
-
-
 
         gamecam= new OrthographicCamera();
         //game screen set size: FitviewPort maintains aspect ratio
@@ -154,74 +89,45 @@ public class PlayScreen implements Screen {
 
         renderer = new OrthogonalTiledMapRenderer(map, 1/Main.PPM);
 
-
-
         gamecam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2,0);
 
         //gravity
         world = new World(new Vector2(0,-10), true);
         b2dr = new Box2DDebugRenderer();
-        creator = new E51WorldCreator(this);
+
         //creating player-Alien
-        player=new Alien(this);
+        player = new Alien(this);
 
-
-        //soldier = new Soldier(this,.32f,.32f);
-
-
-        pBullet = new PlasmaBullet(this, player.getX(), player.getY());
-
-        Array<PlasmaBullet> pBulletArray = new Array<>();
-
-        pBulletArray.add(new PlasmaBullet(this, player.getX(), player.getY()));
+        creator = new E51WorldCreator(this);
 
         world.setContactListener(new WorldContactListener());
-        System.out.println(pBulletArray);
-
-
-
-
-
     }
 
-
-    public void shootTrigger() {
-        pBullet.bulletDead=false;
-        world.destroyBody(pBullet.b2body);
-        // pBulletArray.add(new PlasmaBullet(this, player.getX(), player.getY()));
-        pBullet = new PlasmaBullet(this, player.getX(), player.getY());
-        shoot.play();
-
-        if(player.isRunningRight()==true) {
-            pBullet.b2body.applyLinearImpulse(new Vector2(4.5f, 0f), pBullet.b2body.getWorldCenter(), true);
-        }
-        else{
-            pBullet.b2body.applyLinearImpulse(new Vector2(-4.5f, 0f), pBullet.b2body.getWorldCenter(), true);
-
-        }
-        //  world.destroyBody(pBullet.b2body);
-    }
     public TextureAtlas getFBossAtlas(){
         return FBossAtlas;
     }
 
-
-    public TextureAtlas getAtlat(){
+    public TextureAtlas getAtlas(){
         return atlas;
     }
+
     public TextureAtlas getBulletAtlas(){
         return bullAtlas;
     }
 
+    public Alien getPlayer() {
+        return player;
+    }
+
     @Override
     public void show() {
-
-
     }
+
     public void setState(State st){
-        this.state=st;
+        state = st;
     }
-   /* public void handleInput(float dt) {
+
+    /* public void handleInput(float dt) {
 
         if (player.currentState != Alien.State.DEAD) {
             if (hud.getPlasmaCount() > 0) {
@@ -259,41 +165,29 @@ public class PlayScreen implements Screen {
     //any inputs detected
     public void update(float dt){
         //handleInput(dt);
-        //How many times to calculate per second-how 2 bodies react on collision (higher = more precise)
-        world.step(1/60f,6,2);
 
+        // update player and game objects
         player.update(dt);
-
-        if(pBullet !=null) {
-            pBullet.update(dt);
+        for (SpriteObject object : creator.getObjects()) {
+            object.update(dt);
         }
 
-        // soldier.update(dt);
-        for(Enemies enemies : creator.getSoldiers()) {
-            enemies.update(dt);
-            //delay start soldier movement + activate it
-            if(enemies.getX()<player.getX()+2.8f)
-                enemies.b2body.setActive(true);
-        }
-        for(Enemies enemies : creator.getBoss1()) {
-            enemies.update(dt);
-            //delay start soldier movement + activate it
-            if(enemies.getX()<player.getX()+2.2f)
-                enemies.b2body.setActive(true);
+        // update the physics world and handle collisions
+        // How many times to calculate per second-how 2 bodies react on collision (higher = more precise)
+        world.step(1 / 60f, 6, 2);
+
+        // actually remove the objects and destroy their physics body
+        for (SpriteObject object : objectsToRemove) {
+            creator.getObjects().removeValue(object, true);
+            world.destroyBody(object.getBody());
         }
 
-        for(Enemies enemies : creator.getBoss2()) {
-            enemies.update(dt);
-            //delay start soldier movement + activate it
-            if(enemies.getX()<player.getX()+2.2f)
-                enemies.b2body.setActive(true);
-        }
+        // clear the temporal collection of removed objects
+        objectsToRemove.clear();
 
-
-
+        //update cam view
         gamecam.position.x = player.b2body.getPosition().x;
         gamecam.position.y = player.b2body.getPosition().y;
-        //update cam view
         gamecam.update();
         renderer.setView(gamecam);
     }
@@ -302,13 +196,13 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         update(delta);
 
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
         //recognize camera in game world:only render what gamecam see's
         //game.batch.setProjectionMatrix(gamecam.combined);
         b2dr.render(world, gamecam.combined);
+
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
@@ -325,40 +219,27 @@ public class PlayScreen implements Screen {
             System.out.println(player.levelSwitch);
             renderer = new OrthogonalTiledMapRenderer(map, 1/Main.PPM);
             onNewWorldCreate();
-
-
         }
 
-
-        // soldier.draw(game.batch);
-        for (Enemies enemies : creator.getSoldiers())
-            enemies.draw(game.batch);
-        for (Enemies enemies : creator.getBoss1())
-            enemies.draw(game.batch);
-        for (Enemies enemies : creator.getBoss2())
-            enemies.draw(game.batch);
-
-        if (pBullet != null) {
-            pBullet.draw(game.batch);
+        for (SpriteObject bullet : creator.getObjects()) {
+            bullet.draw(game.batch);
         }
-
 
         game.batch.end();
+
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
 
-
         if (gameOver()) {
-            game.setScreen(gameOverScreen);
+            game.setScreen(new GameOverScreen(game, mainScreen));
             dispose();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             if(state == State.RUN){
-                setState(State.PAUSE);
-                game.setScreen(pauseScreen);
+                setState(state = State.PAUSE);
+                game.setScreen(new PauseScreen(game, this));
             }
-            //dispose();
         }
         switch(state) {
             //Player Inputs
@@ -366,7 +247,7 @@ public class PlayScreen implements Screen {
                 if (player.currentState != Alien.State.DEAD) {
                     if (hud.getPlasmaCount() > 0) {
                         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                            shootTrigger();
+                            creator.shootPlasmaBullet();
                             Hud.minusPlasma(1);
                         }
                     }
@@ -388,10 +269,10 @@ public class PlayScreen implements Screen {
                         }
                     }
                     if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT)
-                            || Gdx.input.isKeyPressed(Input.Keys.D)) && player.b2body.getLinearVelocity().x <= 2)
+                                    || Gdx.input.isKeyPressed(Input.Keys.D)) && player.b2body.getLinearVelocity().x <= 2)
                         player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
                     if ((Gdx.input.isKeyPressed(Input.Keys.LEFT)
-                            || Gdx.input.isKeyPressed(Input.Keys.A)) && player.b2body.getLinearVelocity().x >= -2)
+                                    || Gdx.input.isKeyPressed(Input.Keys.A)) && player.b2body.getLinearVelocity().x >= -2)
                         player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
                 }
                 break;
@@ -400,12 +281,9 @@ public class PlayScreen implements Screen {
                 break;
             case END:
                 break;
-
-
-
-
         }
     }
+
     public boolean gameOver(){
         if(player.currentState==Alien.State.DEAD && player.getStateTimer()>1){
             state = State.RUN;
@@ -416,17 +294,15 @@ public class PlayScreen implements Screen {
         }
     }
 
-
     @Override
     public void resize(int width, int height) {
         //resizes the game to fit screen
         gamePort.update(width,height);
-
     }
     public TiledMap getMap(){
         return map;
-
     }
+
     public World getWorld(){
         return world;
     }
@@ -454,8 +330,5 @@ public class PlayScreen implements Screen {
         hud.dispose();
         map.dispose();
         shoot.dispose();
-
-
-
     }
 }

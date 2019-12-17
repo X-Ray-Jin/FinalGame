@@ -41,7 +41,7 @@ public class Alien extends Sprite {
 
     public Alien(PlayScreen screen) {
         //Take in the alien sprite sheet
-        super(screen.getAtlat().findRegion("Small_Alien"));
+        super(screen.getAtlas().findRegion("Small_Alien"));
 
         this.world = screen.getWorld();
         defineAlien();

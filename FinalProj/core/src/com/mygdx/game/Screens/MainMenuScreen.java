@@ -15,9 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Main;
-import com.mygdx.game.State;
-
-
 
 public class MainMenuScreen extends Main implements Screen{
     Texture backgroundImage;
@@ -39,7 +36,6 @@ public class MainMenuScreen extends Main implements Screen{
     public BitmapFont font;
 
 
-
     public MainMenuScreen(final Main gam) {
         backgroundImage = new Texture ("MainMenu.png");
         backgroundSprite = new Sprite(backgroundImage);
@@ -56,7 +52,6 @@ public class MainMenuScreen extends Main implements Screen{
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-
         music = Main.manager.get("Audio/Chiptronical.ogg", Music.class);
         music.setLooping(true);
         music.play();
@@ -83,8 +78,7 @@ public class MainMenuScreen extends Main implements Screen{
     }
 
     @Override
-    public void show()
-    {
+    public void show() {
         Gdx.input.setInputProcessor(stage);
 
         font = new BitmapFont(Gdx.files.internal("font2.fnt"));
@@ -131,16 +125,11 @@ public class MainMenuScreen extends Main implements Screen{
             }
         });
 
-
-
-
         //these are my 3 labels
         stage.addActor(startLabel);
         stage.addActor(quitLabel);
         stage.addActor(instructionLabel);
     }
-
-
 
     @Override
     public void hide() {
@@ -160,6 +149,4 @@ public class MainMenuScreen extends Main implements Screen{
         quitLabel.setTouchable(Touchable.disabled);
         instructionLabel.setTouchable(Touchable.disabled);
     }
-
-
 }
