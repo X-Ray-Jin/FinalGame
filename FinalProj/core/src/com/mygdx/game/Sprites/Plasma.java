@@ -35,9 +35,9 @@ public class Plasma extends InteractiveObject {
         setCategoryFilter(Main.COLLECT_BIT);
         getCell().setTile(null);
         //adds 10 to score
-        Hud.addScore(10);
+        Hud.addScore(20);
         //adds 2 to plasmaCount
-        Hud.addPlasma(1);
+        Hud.addPlasma(3);
     }
   /*  @Override
     public void dispose(){

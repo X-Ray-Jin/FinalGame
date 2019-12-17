@@ -19,7 +19,7 @@ import com.mygdx.game.State;
 
 
 public class MainMenuScreen extends Main implements Screen{
-    Texture background;
+    Texture backgroundImage;
     Sprite backgroundSprite;
 
     final Main game;
@@ -37,8 +37,8 @@ public class MainMenuScreen extends Main implements Screen{
 
 
     public MainMenuScreen(final Main gam) {
-        background = new Texture ("MainMenu.png");
-        backgroundSprite = new Sprite(background);
+        backgroundImage = new Texture ("MainMenu.png");
+        backgroundSprite = new Sprite(backgroundImage);
        // backgroundSprite.setBounds(0f,0f,1200f,); ///or just the width and height of screen
         game = gam;
 
@@ -81,9 +81,9 @@ public class MainMenuScreen extends Main implements Screen{
         font = new BitmapFont(Gdx.files.internal("font2.fnt"));
 
         startLabel = new Label("Play", new Label.LabelStyle(font,Color.GREEN));
-        startLabel.setPosition(115,290);
+        startLabel.setPosition(115,230);
         startLabel.setTouchable(Touchable.enabled);
-        startLabel.setBounds(115,290,startLabel.getWidth(),startLabel.getHeight());
+        startLabel.setBounds(115,230,startLabel.getWidth(),startLabel.getHeight());
         startLabel.addListener(new ClickListener()
         {
             @Override
@@ -95,10 +95,24 @@ public class MainMenuScreen extends Main implements Screen{
             }
         });
 
+        instructionLabel = new Label("Instructions", new Label.LabelStyle(font,Color.GREEN));
+        instructionLabel.setPosition(115,190);
+        instructionLabel.setTouchable(Touchable.enabled);
+        instructionLabel.setBounds(115,190,instructionLabel.getWidth(),instructionLabel.getHeight());
+        instructionLabel.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                game.setScreen(instructionScreen);
+                dispose();
+            }
+        });
+
+
         quitLabel = new Label("Quit", new Label.LabelStyle(font,Color.GREEN)); // ned a font
-        quitLabel.setPosition(115,260);
+        quitLabel.setPosition(115,150);
         quitLabel.setTouchable(Touchable.enabled);
-        quitLabel.setBounds(115,260,quitLabel.getWidth(),quitLabel.getHeight());
+        quitLabel.setBounds(115,150,quitLabel.getWidth(),quitLabel.getHeight());
         quitLabel.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y)
@@ -108,18 +122,6 @@ public class MainMenuScreen extends Main implements Screen{
             }
         });
 
-        instructionLabel = new Label("Instructions", new Label.LabelStyle(font,Color.GREEN));
-        instructionLabel.setPosition(115,230);
-        instructionLabel.setTouchable(Touchable.enabled);
-        instructionLabel.setBounds(115,230,instructionLabel.getWidth(),instructionLabel.getHeight());
-        instructionLabel.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-                game.setScreen(instructionScreen);
-                dispose();
-            }
-        });
 
 
 

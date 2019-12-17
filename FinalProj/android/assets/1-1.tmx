@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="185" height="35" tilewidth="32" tileheight="32" infinite="0" nextlayerid="19" nextobjectid="188">
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="185" height="35" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="188">
  <tileset firstgid="1" name="Background1" tilewidth="32" tileheight="32" tilecount="100" columns="10">
   <image source="New Project copy 2.png" width="320" height="320"/>
  </tileset>
@@ -47,7 +47,7 @@
  </layer>
  <layer id="13" name="Plasmas" width="185" height="35">
   <data encoding="base64" compression="zlib">
-   eJzt2tENwCAIBUAndv/PzlBqUnjeTQBBRI1rAQAAAJ3tvwMAAACgzJ0um/rCDHo1l9oyScf12jEmAHgjYZYl5JBAHeBu9gCoO9U/+hAAAACALrxVAcBZZisAwHzOdPBNag9V85rw7zC1ZtDZAzI3CQc=
+   eJzt2tENwCAIBUAndv/PzlBqUnjeTQBBRI1rAQAAAJ3tvwMAAACgzJ0um/rCDHo1l9oyScf12jEmAHgjYZYl5JBAHeBu9gCoO9U/+hAAAACALrxVAcBZZisAwHzOdPBdYh9Vc5rw7zCxXtDdAzB/CQc=
   </data>
  </layer>
  <layer id="14" name="Tube" width="185" height="35">
@@ -83,7 +83,7 @@
  <objectgroup id="12" name="Plasmas">
   <object id="132" x="484.211" y="1027.37" width="23.1579" height="25.7895"/>
   <object id="133" x="804.737" y="834.737" width="22.6316" height="27.3684"/>
-  <object id="134" x="1251.05" y="1060" width="23.6842" height="24.7368"/>
+  <object id="134" x="1284.05" y="1060" width="23.6842" height="24.7368"/>
   <object id="135" x="387.368" y="546.842" width="24.2105" height="26.8421"/>
   <object id="136" x="866.842" y="386.316" width="25.2632" height="27.8947"/>
   <object id="137" x="1346.84" y="323.158" width="25.2632" height="26.3158"/>
@@ -196,9 +196,10 @@
   <object id="181" x="5376" y="416" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="17" name="Boss">
-  <object id="183" x="5312" y="1056" width="32" height="32"/>
+  <object id="183" x="5312" y="1034.84" width="32" height="50.3234"/>
  </objectgroup>
  <objectgroup id="18" name="ExitDoor">
   <object id="187" x="5892.5" y="1003" width="19.5" height="83.5"/>
  </objectgroup>
+ <objectgroup id="19" name="Boss2"/>
 </map>

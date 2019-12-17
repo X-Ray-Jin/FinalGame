@@ -1,0 +1,13 @@
+
+CHB.png
+size: 512,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+CHB
+  rotate: false
+  xy: 2, 2
+  size: 330, 98
+  orig: 330, 98
+  offset: 0, 0
+  index: -1

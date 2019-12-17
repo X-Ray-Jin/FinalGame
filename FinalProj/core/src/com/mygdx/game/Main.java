@@ -26,6 +26,7 @@ public class Main extends Game {
 	public static final short DISSAPEAR_BIT=256;
 	public static final short BOSS1_BIT=512;
 	public static final short LEVEL_SWITCH_BIT=1024;
+	public static final short BOSS2_BIT=2048;
 
 
 	

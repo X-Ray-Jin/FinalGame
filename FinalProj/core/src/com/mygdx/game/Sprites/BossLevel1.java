@@ -68,7 +68,7 @@ public class BossLevel1 extends Enemies {
             //count =0;
             //adds score and plasma
             Hud.addScore(100);
-            Hud.addPlasma(10);
+            Hud.addPlasma(15);
         }
 
         else if(!death) {

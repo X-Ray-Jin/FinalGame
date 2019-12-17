@@ -64,7 +64,7 @@ public class PlasmaBullet extends Bullet  {
             fdef.density=75f;
 
             fdef.filter.categoryBits = Main.BULLET_BIT;
-            fdef.filter.maskBits = Main.GROUND_BIT | Main.PLASMA_BIT | Main.ENEMY_BIT | Main.OBJECT_BIT | Main.BOSS1_BIT;
+            fdef.filter.maskBits = Main.GROUND_BIT | Main.ENEMY_BIT | Main.OBJECT_BIT | Main.BOSS1_BIT|Main.BOSS2_BIT;
 
             //setting shape above head
             fdef.shape = shape;
