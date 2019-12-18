@@ -21,14 +21,16 @@ import com.mygdx.game.Main;
 
 import javax.swing.ViewportLayout;
 
-public class GameOverScreen implements Screen {
+public class GameOverScreen extends Main implements Screen {
     private Viewport viewport;
     private Stage stage;
 
-    private Game game;
+    final Main game;
+    MainMenuScreen mainMenuScreen;
 
-    public GameOverScreen(Game game){
+    public GameOverScreen(Main game, MainMenuScreen mainMenuScreen){
         this.game = game;
+        this.mainMenuScreen = mainMenuScreen;
         viewport = new FitViewport(Main.Game_WIDTH, Main.Game_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((Main)game).batch);
 
@@ -39,11 +41,13 @@ public class GameOverScreen implements Screen {
         table.setFillParent(true);
 
         Label gameOverLabel = new Label("GAME OVER", font);
+        Label captureLabel = new Label("YOU'VE BEEN CAPTURED", font);
         Label playAgainLabel = new Label("Play Again", font);
 
         table.add(gameOverLabel).expandX();
         table.row();
         table.add(playAgainLabel).expandX().padTop(10f);
+        table.add(captureLabel).expandX().padTop(5f);
 
         stage.addActor(table);
 
@@ -57,8 +61,9 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
         if(Gdx.input.justTouched()) {
-            game.setScreen(new PlayScreen((Main) game));
+            game.setScreen(new MainMenuScreen(game));
             dispose();
         }
         Gdx.gl.glClearColor(0,0,0,1);
@@ -95,4 +100,3 @@ public class GameOverScreen implements Screen {
 
 
 }
-

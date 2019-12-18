@@ -2,6 +2,7 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -21,11 +22,13 @@ import com.mygdx.game.State;
 public class MainMenuScreen extends Main implements Screen{
     Texture backgroundImage;
     Sprite backgroundSprite;
-
+    private Music music;
     final Main game;
 
     PlayScreen playScreen;
     InstructionScreen instructionScreen;
+    //PauseScreen pauseScreen;
+    GameOverScreen gameOverScreen;
 
     OrthographicCamera camera;
 
@@ -36,14 +39,16 @@ public class MainMenuScreen extends Main implements Screen{
     public BitmapFont font;
 
 
+
     public MainMenuScreen(final Main gam) {
         backgroundImage = new Texture ("MainMenu.png");
         backgroundSprite = new Sprite(backgroundImage);
-       // backgroundSprite.setBounds(0f,0f,1200f,); ///or just the width and height of screen
+        // backgroundSprite.setBounds(0f,0f,1200f,); ///or just the width and height of screen
         game = gam;
 
-
-        playScreen = new PlayScreen(game);
+        gameOverScreen = new GameOverScreen(game, this);
+        playScreen = new PlayScreen(game,gameOverScreen);
+        //pauseScreen = new PauseScreen(game, playScreen);
         instructionScreen = new InstructionScreen(game);
 
         camera = new OrthographicCamera();
@@ -51,6 +56,10 @@ public class MainMenuScreen extends Main implements Screen{
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+
+        music = Main.manager.get("Audio/Chiptronical.ogg", Music.class);
+        music.setLooping(true);
+        music.play();
 
     }
 

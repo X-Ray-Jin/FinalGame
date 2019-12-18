@@ -1,4 +1,5 @@
 package com.mygdx.game.Sprites;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -25,6 +26,7 @@ public class Soldier extends Enemies {
     public State currentState;
     private int count = 0;
     private boolean runningRight;
+    private Sound deathSound;
 
     public Soldier(PlayScreen screen, float x, float y) {
         super(screen, x, y);
@@ -44,12 +46,19 @@ public class Soldier extends Enemies {
 
         setToDeath = false;
         death = false;
+        deathSound=Main.manager.get("Audio/death.ogg", Sound.class);
+    }
+    public void dsound(){
+        if(setToDeath==true){
+            deathSound.play();
+        }
     }
     public void update(float dt){
         stateTime += dt;
         TextureRegion region;
         region=walkAnimation.getKeyFrame(stateTime,true);
             if (setToDeath && !death && count>=3) {
+                dsound();
                 world.destroyBody(b2body);
                 death = true;
                 setRegion(deadAnimation.getKeyFrame(stateTime));
@@ -57,6 +66,7 @@ public class Soldier extends Enemies {
                 // setRegion(new TextureRegion(screen.getAtlat().findRegion("Small_Enemy"),34,0,32,32));
                 //count =0;
                 //adds score and plasma
+
                 Hud.addScore(50);
                 Hud.addPlasma(3);
 

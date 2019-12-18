@@ -117,7 +117,7 @@ public class InstructionScreen extends Main implements Screen {
 
     @Override
     public void dispose() {
-       Instructions.setTouchable(Touchable.disabled);
+        Instructions.setTouchable(Touchable.disabled);
 
     }
 

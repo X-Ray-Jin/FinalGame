@@ -1,6 +1,9 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Screens.MainMenuScreen;
 import com.mygdx.game.Screens.PlayScreen;
@@ -28,13 +31,20 @@ public class Main extends Game {
 	public static final short LEVEL_SWITCH_BIT=1024;
 	public static final short BOSS2_BIT=2048;
 
-
+	public static AssetManager manager;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		manager = new AssetManager();
+		manager.load("Audio/Chiptronical.ogg", Music.class);
+
+		manager.load("Audio/laser7.ogg", Sound.class);
+		manager.load("Audio/death.ogg", Sound.class);
 		//setScreen(new PlayScreen(this));
+		manager.finishLoading();
 		this.setScreen(new MainMenuScreen(this));
+
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -51,6 +52,8 @@ public class PlayScreen implements Screen {
     private Viewport gamePort;
     private Hud hud;
     private MainMenuScreen mainScreen;
+    private PauseScreen pauseScreen;
+    private GameOverScreen gameOverScreen;
 
     private E51WorldCreator creator;
 
@@ -70,19 +73,23 @@ public class PlayScreen implements Screen {
     private BossLevel1 boss1;
     private BossLevel2 boss2;
     public State state = State.RUN;
+    public State pause = State.PAUSE;
     private String[] levelNames = {"1-1.tmx", "1-2.tmx" };
+
     Array<Body> bodies = new Array<>();
 
+    private Sound shoot;
 
 
-
-    public PlayScreen(Main game){
+    public PlayScreen(Main game, GameOverScreen gameOverScreen){
         atlas = new TextureAtlas("Alien_And_Enemies.atlas");
         bullAtlas = new TextureAtlas("Plasma_Ammo.atlas");
         FBossAtlas = new TextureAtlas("CHB.atlas");
 
-        this.game=game;
 
+        this.game=game;
+        this.pauseScreen = new PauseScreen(game, this);
+        this.gameOverScreen = gameOverScreen;
 
 
         gamecam= new OrthographicCamera();
@@ -92,8 +99,8 @@ public class PlayScreen implements Screen {
         hud = new Hud(game.batch);
 
         maploader = new TmxMapLoader();
-       // String[] levelNames = {"1-1.tmx", "1-2.tmx" };
-        map = maploader.load(levelNames[0]);
+        // String[] levelNames = {"1-1.tmx", "1-2.tmx" };
+        map = maploader.load(levelNames[1]);
 
         renderer = new OrthogonalTiledMapRenderer(map, 1/Main.PPM);
 
@@ -121,7 +128,7 @@ public class PlayScreen implements Screen {
         world.setContactListener(new WorldContactListener());
         System.out.println(pBulletArray);
 
-
+        shoot=Main.manager.get("Audio/laser7.ogg", Sound.class);
 
 
 
@@ -178,24 +185,25 @@ public class PlayScreen implements Screen {
     }
 
 
-        public void shootTrigger() {
-                pBullet.bulletDead=false;
-                world.destroyBody(pBullet.b2body);
-               // pBulletArray.add(new PlasmaBullet(this, player.getX(), player.getY()));
-                pBullet = new PlasmaBullet(this, player.getX(), player.getY());
+    public void shootTrigger() {
+        pBullet.bulletDead=false;
+        world.destroyBody(pBullet.b2body);
+        // pBulletArray.add(new PlasmaBullet(this, player.getX(), player.getY()));
+        pBullet = new PlasmaBullet(this, player.getX(), player.getY());
+        shoot.play();
 
-                if(player.isRunningRight()==true) {
-                    pBullet.b2body.applyLinearImpulse(new Vector2(4.5f, 0f), pBullet.b2body.getWorldCenter(), true);
-                }
-                else{
-                    pBullet.b2body.applyLinearImpulse(new Vector2(-4.5f, 0f), pBullet.b2body.getWorldCenter(), true);
-
-                }
-              //  world.destroyBody(pBullet.b2body);
+        if(player.isRunningRight()==true) {
+            pBullet.b2body.applyLinearImpulse(new Vector2(4.5f, 0f), pBullet.b2body.getWorldCenter(), true);
         }
-        public TextureAtlas getFBossAtlas(){
+        else{
+            pBullet.b2body.applyLinearImpulse(new Vector2(-4.5f, 0f), pBullet.b2body.getWorldCenter(), true);
+
+        }
+        //  world.destroyBody(pBullet.b2body);
+    }
+    public TextureAtlas getFBossAtlas(){
         return FBossAtlas;
-        }
+    }
 
 
     public TextureAtlas getAtlat(){
@@ -256,11 +264,11 @@ public class PlayScreen implements Screen {
 
         player.update(dt);
 
-       if(pBullet !=null) {
-           pBullet.update(dt);
-       }
+        if(pBullet !=null) {
+            pBullet.update(dt);
+        }
 
-       // soldier.update(dt);
+        // soldier.update(dt);
         for(Enemies enemies : creator.getSoldiers()) {
             enemies.update(dt);
             //delay start soldier movement + activate it
@@ -295,23 +303,23 @@ public class PlayScreen implements Screen {
         update(delta);
 
 
-            Gdx.gl.glClearColor(0, 0, 0, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            renderer.render();
-            //recognize camera in game world:only render what gamecam see's
-            //game.batch.setProjectionMatrix(gamecam.combined);
-            b2dr.render(world, gamecam.combined);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        renderer.render();
+        //recognize camera in game world:only render what gamecam see's
+        //game.batch.setProjectionMatrix(gamecam.combined);
+        b2dr.render(world, gamecam.combined);
 
-            game.batch.setProjectionMatrix(gamecam.combined);
-            game.batch.begin();
-            player.draw(game.batch);
+        game.batch.setProjectionMatrix(gamecam.combined);
+        game.batch.begin();
+        player.draw(game.batch);
 
-            if(player.levelSwitch==true) {
+        if(player.levelSwitch==true) {
 
-             world.getBodies(bodies);
-             for (Body body : bodies)
-             world.destroyBody(body);
-             bodies.clear();
+            world.getBodies(bodies);
+            for (Body body : bodies)
+                world.destroyBody(body);
+            bodies.clear();
             map = maploader.load(levelNames[1]);
             System.out.println(map);
             System.out.println(player.levelSwitch);
@@ -323,70 +331,70 @@ public class PlayScreen implements Screen {
 
 
         // soldier.draw(game.batch);
-            for (Enemies enemies : creator.getSoldiers())
-                enemies.draw(game.batch);
-            for (Enemies enemies : creator.getBoss1())
-                enemies.draw(game.batch);
-            for (Enemies enemies : creator.getBoss2())
-                enemies.draw(game.batch);
+        for (Enemies enemies : creator.getSoldiers())
+            enemies.draw(game.batch);
+        for (Enemies enemies : creator.getBoss1())
+            enemies.draw(game.batch);
+        for (Enemies enemies : creator.getBoss2())
+            enemies.draw(game.batch);
 
-            if (pBullet != null) {
-                pBullet.draw(game.batch);
+        if (pBullet != null) {
+            pBullet.draw(game.batch);
+        }
+
+
+        game.batch.end();
+
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
+
+
+        if (gameOver()) {
+            game.setScreen(gameOverScreen);
+            dispose();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            if(state == State.RUN){
+                setState(State.PAUSE);
+                game.setScreen(pauseScreen);
             }
-
-
-            game.batch.end();
-
-            game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-            hud.stage.draw();
-
-
-            if (gameOver()) {
-                game.setScreen(new GameOverScreen(game));
-                dispose();
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-               if(state == State.RUN){
-                   setState(state = State.PAUSE);
-                   game.setScreen(new PauseScreen(game));
-               }
-                //dispose();
-            }
+            //dispose();
+        }
         switch(state) {
             //Player Inputs
             case RUN:
-            if (player.currentState != Alien.State.DEAD) {
-                if (hud.getPlasmaCount() > 0) {
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                        shootTrigger();
-                        Hud.minusPlasma(1);
+                if (player.currentState != Alien.State.DEAD) {
+                    if (hud.getPlasmaCount() > 0) {
+                        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                            shootTrigger();
+                            Hud.minusPlasma(1);
+                        }
                     }
-                }
-                if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W)) {
 
-                    if (player.jumpCount < 3) {
+                        if (player.jumpCount < 3) {
 
-                        if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
-                            player.b2body.applyLinearImpulse(new Vector2(0, 3f), player.b2body.getWorldCenter(), true);
+                            if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+                                player.b2body.applyLinearImpulse(new Vector2(0, 3f), player.b2body.getWorldCenter(), true);
 
-                        if (Gdx.input.isKeyJustPressed(Input.Keys.W))
-                            player.b2body.applyLinearImpulse(new Vector2(0, 3f), player.b2body.getWorldCenter(), true);
+                            if (Gdx.input.isKeyJustPressed(Input.Keys.W))
+                                player.b2body.applyLinearImpulse(new Vector2(0, 3f), player.b2body.getWorldCenter(), true);
 
-                        //System.out.println(player.jumpCount);
+                            //System.out.println(player.jumpCount);
 
-                        player.alienLanded = false;
-                        player.jumpCount++;
+                            player.alienLanded = false;
+                            player.jumpCount++;
 
+                        }
                     }
+                    if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT)
+                            || Gdx.input.isKeyPressed(Input.Keys.D)) && player.b2body.getLinearVelocity().x <= 2)
+                        player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+                    if ((Gdx.input.isKeyPressed(Input.Keys.LEFT)
+                            || Gdx.input.isKeyPressed(Input.Keys.A)) && player.b2body.getLinearVelocity().x >= -2)
+                        player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
                 }
-                if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT)
-                        || Gdx.input.isKeyPressed(Input.Keys.D)) && player.b2body.getLinearVelocity().x <= 2)
-                    player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-                if ((Gdx.input.isKeyPressed(Input.Keys.LEFT)
-                        || Gdx.input.isKeyPressed(Input.Keys.A)) && player.b2body.getLinearVelocity().x >= -2)
-                    player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
-            }
-            break;
+                break;
             case PAUSE:
 
                 break;
@@ -445,6 +453,7 @@ public class PlayScreen implements Screen {
         b2dr.dispose();
         hud.dispose();
         map.dispose();
+        shoot.dispose();
 
 
 

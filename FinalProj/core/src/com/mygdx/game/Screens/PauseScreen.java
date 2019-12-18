@@ -36,12 +36,13 @@ public class PauseScreen extends Main implements Screen {
     public BitmapFont font;
 
 
-    public PauseScreen(final Main gam) {
+    public PauseScreen(final Main gam, PlayScreen playScreen) {
         background = new Texture("InstructionsMenu.png");
         backgroundSprite = new Sprite(background);
         // backgroundSprite.setBounds(0f,0f,1200f,); ///or just the width and height of screen
         game = gam;
-       // playScreen = new PlayScreen(game);
+        this.playScreen = playScreen;
+        // playScreen = new PlayScreen(game);
 
 
 
@@ -66,7 +67,9 @@ public class PauseScreen extends Main implements Screen {
 
         backgroundSprite.draw(game.batch);
         if(Gdx.input.isTouched()){
-            game.setScreen(new MainMenuScreen(game));
+
+            playScreen.setState(State.RUN);
+            game.setScreen(playScreen);
             dispose();
         }
         game.batch.end();
@@ -92,9 +95,9 @@ public class PauseScreen extends Main implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                playScreen.setState(State.PAUSE);
+                //playScreen.setState(State.PAUSE);
                 game.setScreen(playScreen);
-               // dispose();
+                // dispose();
             }
         });
         paused = new Label("Paused", new Label.LabelStyle(font, Color.GREEN));
@@ -127,7 +130,7 @@ public class PauseScreen extends Main implements Screen {
 
     @Override
     public void dispose() {
-       resume.setTouchable(Touchable.disabled);
+        resume.setTouchable(Touchable.disabled);
 
     }
 
