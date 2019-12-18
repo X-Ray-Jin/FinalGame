@@ -185,6 +185,7 @@ public class PlayScreen implements Screen {
         // update the physics world and handle collisions
         // How many times to calculate per second-how 2 bodies react on collision (higher = more precise)
         world.step(1 / 60f, 6, 2);
+
         // check objects if they should be removed and collect them
         for (SpriteObject object : creator.getObjects()) {
             if (object.isMarkedForRemoval())
@@ -212,15 +213,9 @@ public class PlayScreen implements Screen {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        renderer.render();
-        //recognize camera in game world:only render what gamecam see's
-        //game.batch.setProjectionMatrix(gamecam.combined);
-        b2dr.render(world, gamecam.combined);
-
 
         game.batch.setProjectionMatrix(gamecam.combined);
-        game.batch.begin();
-        player.draw(game.batch);
+        renderer.render();
 
         if (switchLevel) {
             loadLevel(levelNames[1]);
@@ -232,6 +227,10 @@ public class PlayScreen implements Screen {
             }
             game.batch.end();
         }
+
+        //recognize camera in game world:only render what gamecam see's
+        //game.batch.setProjectionMatrix(gamecam.combined);
+        b2dr.render(world, gamecam.combined);
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
